@@ -12,6 +12,6 @@
         android:id="@+id/TextBox"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:text="@string/main_text" />
+        android:text="@string/side_text" />
 
 </RelativeLayout>

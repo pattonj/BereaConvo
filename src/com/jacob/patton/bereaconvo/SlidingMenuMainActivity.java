@@ -1,19 +1,13 @@
 package com.jacob.patton.bereaconvo;
 
-import android.os.Bundle;
-
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
-
-/*
- * Change this to a fragment class using article fragment and title fragment
- * 
- */
+import android.os.Bundle;
 
 
-public class MainActivity extends SherlockFragmentActivity {
+public class SlidingMenuMainActivity extends SherlockActivity {
 	
 	
 	 
@@ -38,7 +32,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			// set content view
-			setContentView(R.layout.fragment_activity_main);
+			setContentView(R.layout.activity_main);
 		
 	        // configure the SlidingMenu
 	        SlidingMenu menu = new SlidingMenu(this);
@@ -50,9 +44,6 @@ public class MainActivity extends SherlockFragmentActivity {
 	        menu.setFadeDegree(0.35f);
 	        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
 	        menu.setMenu(R.layout.sidemenu);
-	        
-	        
-	        //inserting fragments
 	        
 	    }	
 
