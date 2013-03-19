@@ -56,7 +56,43 @@ public class MainActivity extends SherlockFragmentActivity {
 	        
 	    }	
 
-		
+	/*
+	 * EXAMPLE SUBROUTINES
+	 * 
+	 * Determine if Master arraylists exist. 
+	 * 		If not (create master list){
+	 *         	inside master list(){
+	 * 				Semester
+	 * 				Date				
+	 * 				time 				
+	 * 				Description
+	 *      }
+	 * 			}
+	 * 	
+	 * 
+	 * 
+	 * Create Semester Array list (int semester){
+	 * 			if 1 = fall
+	 * 			if 2 = spring
+	 * 		create a copy of master with only ones that are fall or spring
+	 * }
+	 * 
+	 * Create Time Array List(int timestamp){ // time as in morning, afternoon, or evening
+	 * 		create a copy of semester arraylist with only matching timestamp
+	 * 			if (timestamp = 1)
+	 * 				copy all
+	 * }
+	 * 
+	 * Update arraylist display {
+	 * 		info list fragment (update - create the buttons using info from arraylist).
+	 * 			on press display convo information fragment passing the number it is (ie 2)  
+	 *  
+	 *}
+	 *
+	 * 
+	 * 
+	 * 
+	 */
     
 
 }
