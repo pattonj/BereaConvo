@@ -13,6 +13,10 @@ public class ArticleFragment extends SherlockFragment{
 		super.onCreate(savedInstanceState);
 		// set content view
 		 return inflater.inflate(R.layout.activity_main, container, false);
+		 
+		 
 	}
 
+
+	
 }

@@ -1,6 +1,7 @@
 package com.jacob.patton.bereaconvo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Bundle;
 
@@ -17,9 +18,12 @@ import com.slidingmenu.lib.SlidingMenu;
 
 public class MainActivity extends SherlockFragmentActivity {
 	
-	public ArrayList<String[]> database;
-	public ArrayList<String[]> dbFall;
-	public ArrayList<String[]> dbSpring;
+	//Master database
+	public List<String[]> database;
+	// needs to be a final public string that changes when the tab is pushed. 
+	public String semester = "fall"; 
+	//the database to be displayed. 
+	public List<String[]> dbDisplay;
 	 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
@@ -57,12 +61,16 @@ public class MainActivity extends SherlockFragmentActivity {
 	        
 	        
 	        //inserting fragments
-	        
+	        // creating master database. 
+	       createMaster();
 	    }	
 
-	
-	public void createMaster(){
-		// creates database list 
+	/**
+	 * This creates the master list (database) of convocations in list that contains Arrays. 
+	 * [semester, date,time, description]
+	 */
+	private void createMaster(){
+		// creates master database list 
 		// Currently this is random, later this will be where the parse goes. 
 		// This is used instead of two separate semester lists as to make parsing data easier down the road.
 		// The array is as follows [semester, date,time, description]
@@ -81,70 +89,115 @@ public class MainActivity extends SherlockFragmentActivity {
 			}
 	}
 	
-	
-	
-	public void createSemesters(){
-		// Both semester databases have been declared at the start, so initialize them here.  
-		dbFall = new ArrayList<String[]>();
-		dbSpring = new ArrayList<String[]>();
+	/**
+	 * This sorts the data depending on the number sent. 
+	 * Used the semester variable to decide which ones to add.     
+	 *0=all, 1=afternoon, 2=evening, 3=special
+	 *
+	 */	
+	public void sortData(int number){
 		
-		// loop it the number of times for the size of the database. 
-		for(int i = 0; i< database.size(); i++){
-			// if the first array value is fall, add to fall database. 
-			if(database.get(i)[0].equals("Fall")){
-				dbFall.add(database.get(i));
+		
+		// overwrites the old display every time it runs. 
+		dbDisplay = new ArrayList<String[]>();
+		
+		// if 0, copy the current semester to dbDisplay
+		if(number == 0){
+			//run through the database add it to the display.  
+			for(int i = 0; i< database.size(); i++){
+				dbDisplay.add(database.get(i));
 			}
-			// Check to see if it's spring, and add it to spring. 
-			else if(database.get(i)[0].equals("Spring")){
-				dbSpring.add(database.get(i));
-			}
-			else{
-				// it's misspelled or an error so ignore. 
-			}
-			
 		}
 		
+		// if 1, check for afternoon convos
+		else if(number == 1){
+			//run through the database 
+			for(int i = 0; i< database.size(); i++){
+				//get the first character from the time slot. 
+				char time = database.get(i)[2].charAt(0);
+				// if that is equal to 3, add it to the display list. 
+				if((time == '3')&& database.get(i)[0].equals(semester)){
+					dbDisplay.add(database.get(i));
+				}
+			}
+		}
+		
+		// if 2, check for evening convos
+		else if(number == 2){
+			//run through the database 
+			for(int i = 0; i< database.size(); i++){
+				//get the first character from the time slot. 
+				char time = database.get(i)[2].charAt(0);
+				// if that is equal to 8, add it to the display list. 
+				if((time == '8')&& database.get(i)[0].equals(semester)){
+					dbDisplay.add(database.get(i));
+				}
+			}
+		}
+		
+		// if 3, check for special convos
+		else if(number == 3){
+			//run through the database 
+			for(int i = 0; i< database.size(); i++){
+				//get the first character from the time slot. 
+				char time = database.get(i)[2].charAt(0);
+				// if that is not equal to 3 or 8, add it to the display list. 
+				if((time !='3')&&(time !='8')&& database.get(i)[0].equals(semester)){
+					dbDisplay.add(database.get(i));
+				}
+			}
+		}
+		
+		
+		
+	}
+	/**
+	 * currently not used. 
+	 * @return
+	 */
+	public List<String[]> getArticleData(){
+		// this needs to return a copy of the dbdisplay for article fragment to display. 
+		return dbDisplay;
+	}
+	
+	/**
+	 * Returns a copy of the data to be displayed, 
+	 * which is a list of arrays.  
+	 * [semester, date,time, description]
+	 *
+	 * @return List
+	 */
+	public List<String[]> getMenuData(){
+		// this needs to return a copy of the dbdisplay for creating the menu buttons.
+		return dbDisplay;
 	}
 	
 	
 	/*
-	 * EXAMPLE SUBROUTINES
+	 * To Do:
 	 * 
-	 * Determine if Master arraylists exist. -- added  
-	 * 		If not (create master list){
-	 * 			
-	 *         	inside master list(){
-	 * 				Semester
-	 * 				Date				
-	 * 				time 				
-	 * 				Description
-	 *      }
-	 * 			}
-	 * 	
+	 * Main Activity - 
+	 * Need to set a check to see if it's the first time or if the database does not exist. 
+	 * If it doesn't, it needs to create it. 
+	 * 
+	 *  Also, Final values need to be set (for permenant storage)  
+	 *  method for setting the semester.  
 	 * 
 	 * 
-	 * Create Semester Array list (int semester){ -- added. 
-	 * 			if 1 = fall
-	 * 			if 2 = spring
-	 * 		create a copy of master with only ones that are fall or spring
-	 * }
+	 * Menu(TitleFragment) - Change the title
+	 * This needs to be setup to create the menu using the array list that is passed. 
 	 * 
-	 * Create Time Array List(int timestamp){ // time as in morning, afternoon, or evening
-	 * 		create a copy of semester arraylist with only matching timestamp
-	 * 			if (timestamp = 1)
-	 * 				copy all
-	 * }
-	 * 
-	 * Update arraylist display {
-	 * 		info list fragment (update - create the buttons using info from arraylist).
-	 * 			on press display convo information fragment passing the number it is (ie 2)  
-	 *  
-	 *}
-	 *
+	 * Article(ArticleFragment)- Change the title
+	 * This needs to be set to display the data of a certain array when passed. 
+	 * One way would be to pass a numerical value which corresponds to the array in the dbDisplay. 
 	 * 
 	 * 
+	 * Later!
+	 * Add the ability to mark convos as attended, this means creating an ID # and checkmark value to the array. 
+	 * (This would mean shifting the location for the arrays for certain things.)
+	 * (Also, when updated with completely new convos it would need to reset). 
+	 * (if only partial update, it would need to keep the convos attended).  
 	 * 
 	 */
-    
-
+	
 }
