@@ -13,5 +13,26 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:text="@string/main_text" />
+      <TextView
+        android:id="@+id/ConvoTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="@string/main_text" />
+        <TextView
+        android:id="@+id/ConvoDate"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="@string/main_text" />
+        <TextView
+        android:id="@+id/ConvoTime"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="@string/main_text" />
 
+		<TextView
+        android:id="@+id/Description"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="@string/main_text" />
+          
 </RelativeLayout>

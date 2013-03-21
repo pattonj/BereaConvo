@@ -26,6 +26,7 @@ public class MenuFragment extends SherlockFragment{
 	
 	 	mButton.setOnClickListener(new OnClickListener() {
 	        @Override
+	        // this is the action performed when clicked. 
 	        public void onClick(View v) {
 	            update();
 	        }

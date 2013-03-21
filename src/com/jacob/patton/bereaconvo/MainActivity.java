@@ -25,6 +25,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	//the database to be displayed. 
 	public List<String[]> dbDisplay;
 	 
+	// creates the side sliding menu. 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
         menu.add("Fall")
@@ -46,7 +47,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			// set content view
-			setContentView(R.layout.fragment_activity_main);
+			setContentView(R.layout.main_fragment_activity);
 		
 	        // configure the SlidingMenu
 	        SlidingMenu menu = new SlidingMenu(this);
@@ -73,19 +74,19 @@ public class MainActivity extends SherlockFragmentActivity {
 		// creates master database list 
 		// Currently this is random, later this will be where the parse goes. 
 		// This is used instead of two separate semester lists as to make parsing data easier down the road.
-		// The array is as follows [semester, date,time, description]
+		// The array is as follows [ID,semester, date,time, Title, description]
 		 database = new ArrayList<String[]>();
 			for(int i=0; i<5; i++){
-				database.add(new String[]{"Fall","i/8/12","3:00pm","This is a description of the data that will be used"});
-				database.add(new String[]{"Spring","i/2/13","3:00pm","This is a description of the data that will be used"});
+				database.add(new String[]{""+i,"Fall","i/8/12","3:00pm","fall convo "+i ,"This is a description of the data that will be used"});
+				database.add(new String[]{""+i+5,"Spring","i/2/13","3:00pm","spring convo "+i, "This is a description of the data that will be used"});
 			}
 			for(int i=0; i<2; i++){
-				database.add(new String[]{"Fall","i/2/13","8:00pm","This is a description of the data that will be used"});
-				database.add(new String[]{"Spring","i/2/14","8:00pm","This is a description of the data that will be used"});
+				database.add(new String[]{""+i+10,"Fall","i/2/13","8:00pm","fall convo "+i,"This is a description of the data that will be used"});
+				database.add(new String[]{""+i+12,"Spring","i/2/14","8:00pm","Spring convo "+i,"This is a description of the data that will be used"});
 			}
 			for(int i=0; i<2; i++){
-				database.add(new String[]{"Fall","i/2/13","6:00pm","This is a description of the data that will be used"});
-				database.add(new String[]{"Spring","i/2/14","6:00pm","This is a description of the data that will be used"});
+				database.add(new String[]{""+i+14,"Fall","i/2/13","6:00pm","fall convo "+i,"This is a description of the data that will be used"});
+				database.add(new String[]{""+i+16,"Spring","i/2/14","6:00pm","spring convo "+i,"This is a description of the data that will be used"});
 			}
 	}
 	
@@ -104,8 +105,11 @@ public class MainActivity extends SherlockFragmentActivity {
 		// if 0, copy the current semester to dbDisplay
 		if(number == 0){
 			//run through the database add it to the display.  
+			//ADD THE SEMSTER TO THIS!!! 
 			for(int i = 0; i< database.size(); i++){
-				dbDisplay.add(database.get(i));
+				if(database.get(i)[0].equals(semester)){
+					dbDisplay.add(database.get(i));
+				}
 			}
 		}
 		
@@ -193,7 +197,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	 * 
 	 * 
 	 * Later!
-	 * Add the ability to mark convos as attended, this means creating an ID # and checkmark value to the array. 
+	 * Add the ability to mark convos as attended, this means creating an ID # (DONE) and checkmark value to the array. 
 	 * (This would mean shifting the location for the arrays for certain things.)
 	 * (Also, when updated with completely new convos it would need to reset). 
 	 * (if only partial update, it would need to keep the convos attended).  
