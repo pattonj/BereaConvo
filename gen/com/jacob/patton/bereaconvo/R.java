@@ -1040,12 +1040,12 @@ containing a value of this type.
         public static final int shadow=0x7f020070;
     }
     public static final class id {
-        public static final int ConvoDate=0x7f04003a;
-        public static final int ConvoTime=0x7f04003b;
-        public static final int ConvoTitle=0x7f040039;
-        public static final int Description=0x7f04003c;
+        public static final int ConvoDate=0x7f040039;
+        public static final int ConvoDescription=0x7f04003b;
+        public static final int ConvoTime=0x7f04003a;
+        public static final int ConvoTitle=0x7f040038;
         public static final int SideButton=0x7f04003e;
-        public static final int TextBoxArticle=0x7f040038;
+        public static final int TextBoxArticle=0x7f04003c;
         public static final int TextBoxMenu=0x7f04003d;
         public static final int abs__action_bar=0x7f040027;
         public static final int abs__action_bar_container=0x7f040026;
@@ -1196,6 +1196,10 @@ containing a value of this type.
         public static final int afternoon_button=0x7f090016;
         public static final int all_button=0x7f090015;
         public static final int app_name=0x7f09000f;
+        public static final int convo_date=0x7f09001a;
+        public static final int convo_description=0x7f09001c;
+        public static final int convo_time=0x7f09001b;
+        public static final int convo_title=0x7f090019;
         public static final int evening_button=0x7f090017;
         public static final int hello_world=0x7f090012;
         public static final int main_text=0x7f090014;

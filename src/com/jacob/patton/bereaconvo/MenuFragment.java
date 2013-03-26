@@ -1,5 +1,7 @@
 package com.jacob.patton.bereaconvo;
 
+import java.util.List;
+
 import com.actionbarsherlock.app.SherlockFragment;
 
 import android.os.Bundle;
@@ -42,8 +44,7 @@ public class MenuFragment extends SherlockFragment{
 // used to update the fragment text. 
 public void update(){
 	text = (TextView) getView().findViewById(R.id.TextBoxMenu);
-	text.setText("working");
-
+	text.setText("working");	
 }
 	
 

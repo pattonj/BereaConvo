@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+
 import com.slidingmenu.lib.SlidingMenu;
 
 /*
@@ -68,7 +69,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	/**
 	 * This creates the master list (database) of convocations in list that contains Arrays. 
-	 * [semester, date,time, description]
+	 * [ID,semester, date,time, Title, description]
 	 */
 	private void createMaster(){
 		// creates master database list 
@@ -159,15 +160,18 @@ public class MainActivity extends SherlockFragmentActivity {
 	 * currently not used. 
 	 * @return
 	 */
-	public List<String[]> getArticleData(){
+	public void displayArticleData(){
 		// this needs to return a copy of the dbdisplay for article fragment to display. 
-		return dbDisplay;
+		// used to activate the updateArticle class from the ArticleFragment Class
+		ArticleFragment articleFrag = (ArticleFragment) getSupportFragmentManager().findFragmentById(R.id.article_frame);
+		articleFrag.updateArticle(dbDisplay,1);
+		return ;
 	}
 	
 	/**
 	 * Returns a copy of the data to be displayed, 
 	 * which is a list of arrays.  
-	 * [semester, date,time, description]
+	 * [ID,semester, date,time, Title, description]
 	 *
 	 * @return List
 	 */

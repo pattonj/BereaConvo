@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,33 +6,48 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/TextBoxArticle"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:text="@string/main_text" />
+    
       <TextView
         android:id="@+id/ConvoTitle"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:text="@string/main_text" />
-        <TextView
-        android:id="@+id/ConvoDate"
+        android:layout_height="wrap_content"
+        android:text="@string/convo_title" 
+        android:textSize="15sp"/>   
+      
+      <LinearLayout 
+      android:layout_width="match_parent"
+  	  android:layout_height="wrap_content"
+  	  android:orientation="horizontal"
+  	  android:paddingTop="10dp"
+      android:paddingBottom="10dp"
+          >
+		      <TextView
+		        android:id="@+id/ConvoDate"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/convo_date" 
+		        android:gravity="left" />
+		      
+		      <TextView
+		          android:id="@+id/ConvoTime"
+		          android:layout_width="match_parent"
+		          android:layout_height="wrap_content"
+		          android:gravity="right"
+		          android:text="@string/convo_time" />
+		      
+		</LinearLayout>		
+	<TextView
+        android:id="@+id/ConvoDescription"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:text="@string/main_text" />
-        <TextView
-        android:id="@+id/ConvoTime"
+        android:layout_height="wrap_content"
+        android:text="@string/convo_description" />
+	 <TextView
+        android:id="@+id/TextBoxArticle"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:text="@string/main_text" />
-
-		<TextView
-        android:id="@+id/Description"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:text="@string/main_text" />
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" />
           
-</RelativeLayout>
+</LinearLayout>

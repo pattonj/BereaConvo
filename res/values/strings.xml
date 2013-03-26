@@ -11,4 +11,10 @@
     <string name ="afternoon_button">Afternoon</string>
 	<string name ="evening_button">Evening</string>
 	<string name ="special_button">Special</string>
+	
+	<string name ="convo_title">Title</string>
+	<string name ="convo_date">1/2/34</string>
+	<string name ="convo_time">3:00pm - 4:00pm</string>
+	<string name="convo_description">This is the main text to show convocation information to the use.</string>
+	
 </resources>
