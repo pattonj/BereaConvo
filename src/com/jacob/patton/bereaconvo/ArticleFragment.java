@@ -1,7 +1,6 @@
 package com.jacob.patton.bereaconvo;
 
 
-import java.util.List;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,35 +14,53 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 public class ArticleFragment extends SherlockFragment{
 	
+	// Setting Variable names. 
 	TextView convoTitle;
 	TextView convoDate;
 	TextView convoTime;
 	TextView convoDescription;
-	List<String[]> dbDisplay;
-	//MainActivity main = new MainActivity();
+	String[] toDisplay;
 	
 	
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// set content view
+		// set content view using the xml layout. 
 		 return inflater.inflate(R.layout.fragment_article, container, false);
 	}
 
 	
+	
+	/**
+	 * Updates the text inside the article display. - 
+	 * [ID,semester,date,time,title,description] - setup of array
+	 * @param data - Array with Data. 
+	 */
 
-	public void updateArticle(List dbDisplay, int ID){
-		//dbDisplay = new ArrayList<String[]>();
-		//dbDisplay = main.getMenuData();// ID,semester,date,time,title,description.
+	public void updateArticle(String[] data){
+	//public void updateArticle(){	
+		// set or reset the array 
+		//toDisplay = new String[];
+		// copy the data  (which really isn't needed. 
+		//toDisplay = data;
+		// [ID,semester,date,time,title,description] - setup of array.
+		
+		// find and set convo title text
 		convoTitle = (TextView) getView().findViewById(R.id.ConvoTitle);
-		convoTitle.setText("success");
-		//convoTitle.setText(dbDisplay.get(id)[4]);
-		/*convoDate = (TextView) getView().findViewById(R.id.ConvoDate);
-			convoDate.setText(dbDisplay.get(id)[2]);
+		convoTitle.setText("success"); 
+		convoTitle.setText(data[4]);
+		
+		// find and set convo data
+		convoDate = (TextView) getView().findViewById(R.id.ConvoDate);
+			convoDate.setText(data[2]);
+			
+		// find and set convo time. 	
 		convoTime = (TextView) getView().findViewById(R.id.ConvoTime);
-			convoTime.setText(dbDisplay.get(id)[3]);
+			convoTime.setText(data[3]);
+			
+		// find and set description. 	
 		convoDescription = (TextView) getView().findViewById(R.id.ConvoDescription);
-			convoDescription.setText(dbDisplay.get(id)[5]);*/
+			convoDescription.setText(data[5]);
 	}
 	
 }

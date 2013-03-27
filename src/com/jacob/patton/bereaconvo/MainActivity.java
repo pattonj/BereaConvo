@@ -17,15 +17,20 @@ import com.slidingmenu.lib.SlidingMenu;
  */
 
 
-public class MainActivity extends SherlockFragmentActivity {
+public class MainActivity extends SherlockFragmentActivity 
+		implements MenuFragment.onArticleSelected{
 	
 	//Master database
 	public List<String[]> database;
 	// needs to be a final public string that changes when the tab is pushed. 
 	public String semester = "fall"; 
+	
 	//the database to be displayed. 
 	public List<String[]> dbDisplay;
-	 
+	
+	int id =0;
+	
+
 	// creates the side sliding menu. 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
@@ -78,21 +83,21 @@ public class MainActivity extends SherlockFragmentActivity {
 		// The array is as follows [ID,semester, date,time, Title, description]
 		 database = new ArrayList<String[]>();
 			for(int i=0; i<5; i++){
-				database.add(new String[]{""+i,"Fall","i/8/12","3:00pm","fall convo "+i ,"This is a description of the data that will be used"});
-				database.add(new String[]{""+i+5,"Spring","i/2/13","3:00pm","spring convo "+i, "This is a description of the data that will be used"});
+				database.add(new String[]{""+i,"Fall",i+"/8/12","3:00pm","fall convo "+i ,"This is a description of the data that will be used"});
+				database.add(new String[]{""+i+5,"Spring",i+"/2/13","3:00pm","spring convo "+i, "This is a description of the data that will be used"});
 			}
 			for(int i=0; i<2; i++){
-				database.add(new String[]{""+i+10,"Fall","i/2/13","8:00pm","fall convo "+i,"This is a description of the data that will be used"});
-				database.add(new String[]{""+i+12,"Spring","i/2/14","8:00pm","Spring convo "+i,"This is a description of the data that will be used"});
+				database.add(new String[]{""+i+10,"Fall",i+"/2/13","8:00pm","fall convo "+i,"This is a description of the data that will be used"});
+				database.add(new String[]{""+i+12,"Spring",i+"/2/14","8:00pm","Spring convo "+i,"This is a description of the data that will be used"});
 			}
 			for(int i=0; i<2; i++){
-				database.add(new String[]{""+i+14,"Fall","i/2/13","6:00pm","fall convo "+i,"This is a description of the data that will be used"});
-				database.add(new String[]{""+i+16,"Spring","i/2/14","6:00pm","spring convo "+i,"This is a description of the data that will be used"});
+				database.add(new String[]{""+i+14,"Fall",i+"/2/13","6:00pm","fall convo "+i,"This is a description of the data that will be used"});
+				database.add(new String[]{""+i+16,"Spring",i+"/2/14","6:00pm","spring convo "+i,"This is a description of the data that will be used"});
 			}
 	}
 	
 	/**
-	 * This sorts the data depending on the number sent. 
+	 * This sorts the data depending on the number sent from sliding menu.  
 	 * Used the semester variable to decide which ones to add.     
 	 *0=all, 1=afternoon, 2=evening, 3=special
 	 *
@@ -106,11 +111,10 @@ public class MainActivity extends SherlockFragmentActivity {
 		// if 0, copy the current semester to dbDisplay
 		if(number == 0){
 			//run through the database add it to the display.  
-			//ADD THE SEMSTER TO THIS!!! 
 			for(int i = 0; i< database.size(); i++){
-				if(database.get(i)[0].equals(semester)){
+				//if(database.get(i)[0].equals(semester)){
 					dbDisplay.add(database.get(i));
-				}
+				//}
 			}
 		}
 		
@@ -157,28 +161,28 @@ public class MainActivity extends SherlockFragmentActivity {
 		
 	}
 	/**
-	 * currently not used. 
+	 * This is used to pass the proper array over to
+	 * the Article fragment which then updates the text.
 	 * @return
 	 */
 	public void displayArticleData(){
-		// this needs to return a copy of the dbdisplay for article fragment to display. 
-		// used to activate the updateArticle class from the ArticleFragment Class
+		
+		// this find the ArticleFragment frame and give it a variable name. 
 		ArticleFragment articleFrag = (ArticleFragment) getSupportFragmentManager().findFragmentById(R.id.article_frame);
-		articleFrag.updateArticle(dbDisplay,1);
+		// currently used for testing to send different convos to the ArticleFramgent. 
+		id++;
+		// used to activate the updateArticle class from the ArticleFragment Class
+		
+		
+		createMaster();
+		sortData(0);
+		articleFrag.updateArticle(dbDisplay.get(id));
+		//articleFrag.updateArticle();
 		return ;
+		// Later add if == null, then we are in the phone view. 
+		
 	}
 	
-	/**
-	 * Returns a copy of the data to be displayed, 
-	 * which is a list of arrays.  
-	 * [ID,semester, date,time, Title, description]
-	 *
-	 * @return List
-	 */
-	public List<String[]> getMenuData(){
-		// this needs to return a copy of the dbdisplay for creating the menu buttons.
-		return dbDisplay;
-	}
 	
 	
 	/*
@@ -189,16 +193,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	 * If it doesn't, it needs to create it. 
 	 * 
 	 *  Also, Final values need to be set (for permenant storage)  
-	 *  method for setting the semester.  
-	 * 
-	 * 
-	 * Menu(TitleFragment) - Change the title
-	 * This needs to be setup to create the menu using the array list that is passed. 
-	 * 
-	 * Article(ArticleFragment)- Change the title
-	 * This needs to be set to display the data of a certain array when passed. 
-	 * One way would be to pass a numerical value which corresponds to the array in the dbDisplay. 
-	 * 
+	 *  method for setting the semester.   
 	 * 
 	 * Later!
 	 * Add the ability to mark convos as attended, this means creating an ID # (DONE) and checkmark value to the array. 
