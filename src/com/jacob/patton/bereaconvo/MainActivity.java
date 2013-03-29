@@ -28,9 +28,7 @@ public class MainActivity extends SherlockFragmentActivity
 	//the database to be displayed. 
 	public List<String[]> dbDisplay;
 	
-	int id =0;
 	
-
 	// creates the side sliding menu. 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
@@ -70,6 +68,8 @@ public class MainActivity extends SherlockFragmentActivity
 	        //inserting fragments
 	        // creating master database. 
 	       createMaster();
+	       sortData(0);
+	              
 	    }	
 
 	/**
@@ -79,6 +79,7 @@ public class MainActivity extends SherlockFragmentActivity
 	private void createMaster(){
 		// creates master database list 
 		// Currently this is random, later this will be where the parse goes. 
+		// this could be set via a class as well. 
 		// This is used instead of two separate semester lists as to make parsing data easier down the road.
 		// The array is as follows [ID,semester, date,time, Title, description]
 		 database = new ArrayList<String[]>();
@@ -165,23 +166,24 @@ public class MainActivity extends SherlockFragmentActivity
 	 * the Article fragment which then updates the text.
 	 * @return
 	 */
-	public void displayArticleData(){
+	public void displayArticleData(int position){
 		
 		// this find the ArticleFragment frame and give it a variable name. 
 		ArticleFragment articleFrag = (ArticleFragment) getSupportFragmentManager().findFragmentById(R.id.article_frame);
-		// currently used for testing to send different convos to the ArticleFramgent. 
-		id++;
-		// used to activate the updateArticle class from the ArticleFragment Class
-		
-		
-		createMaster();
-		sortData(0);
-		articleFrag.updateArticle(dbDisplay.get(id));
-		//articleFrag.updateArticle();
+		// pass the position from the selected menu to the article. 
+		// this will be the dbDisplay later. 
+		articleFrag.updateArticle(database.get(position));
 		return ;
 		// Later add if == null, then we are in the phone view. 
 		
 	}
+	
+	
+	/*IGNORE
+	 * public void passData(){
+		MenuFragment menuFrag = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_frame);
+		menuFrag.setDisplayData(dbDisplay);
+	}*/
 	
 	
 	

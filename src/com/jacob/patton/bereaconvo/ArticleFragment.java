@@ -38,11 +38,7 @@ public class ArticleFragment extends SherlockFragment{
 	 */
 
 	public void updateArticle(String[] data){
-	//public void updateArticle(){	
-		// set or reset the array 
-		//toDisplay = new String[];
-		// copy the data  (which really isn't needed. 
-		//toDisplay = data;
+	
 		// [ID,semester,date,time,title,description] - setup of array.
 		
 		// find and set convo title text

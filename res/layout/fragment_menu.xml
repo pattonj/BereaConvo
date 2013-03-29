@@ -9,18 +9,11 @@
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/TextBoxMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/side_text"  />
-    <Button 
-        android:id="@+id/SideButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Text Button"  />
-        
-        
-    
+     <ListView android:id="@id/android:list"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:drawSelectorOnTop="false"/>
+              
 
 </LinearLayout>
