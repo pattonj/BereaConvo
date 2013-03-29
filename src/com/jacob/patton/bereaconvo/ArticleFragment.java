@@ -43,7 +43,6 @@ public class ArticleFragment extends SherlockFragment{
 		
 		// find and set convo title text
 		convoTitle = (TextView) getView().findViewById(R.id.ConvoTitle);
-		convoTitle.setText("success"); 
 		convoTitle.setText(data[4]);
 		
 		// find and set convo data

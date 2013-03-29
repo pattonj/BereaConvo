@@ -4,8 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
@@ -23,7 +30,7 @@ public class MainActivity extends SherlockFragmentActivity
 	//Master database
 	public List<String[]> database;
 	// needs to be a final public string that changes when the tab is pushed. 
-	public String semester = "fall"; 
+	public String semester = "Fall"; 
 	
 	//the database to be displayed. 
 	public List<String[]> dbDisplay;
@@ -34,15 +41,16 @@ public class MainActivity extends SherlockFragmentActivity
 		
         menu.add("Fall")
         	.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+        	
 
         menu.add("Spring")
             .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
         
         menu.add("Settings")
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+        	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         
         menu.add("About")
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+        	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         
         return true;
     }
@@ -65,12 +73,26 @@ public class MainActivity extends SherlockFragmentActivity
 	        menu.setMenu(R.layout.sidemenu);
 	        
 	        
-	        //inserting fragments
+	        
+	         Button button = (Button) menu.findViewById(R.id.ALL);
+	         button.setOnClickListener(new View.OnClickListener() {
+	             public void onClick(View v) {
+	                 // Perform action on click
+	            	 sortData(0);
+	            	 displayMenuData();
+	            	 
+	             }
+	         });
+	        
+	        
+	        
 	        // creating master database. 
 	       createMaster();
-	       sortData(0);
+	       sortData(3);
+	       displayMenuData();
 	              
 	    }	
+
 
 	/**
 	 * This creates the master list (database) of convocations in list that contains Arrays. 
@@ -91,7 +113,7 @@ public class MainActivity extends SherlockFragmentActivity
 				database.add(new String[]{""+i+10,"Fall",i+"/2/13","8:00pm","fall convo "+i,"This is a description of the data that will be used"});
 				database.add(new String[]{""+i+12,"Spring",i+"/2/14","8:00pm","Spring convo "+i,"This is a description of the data that will be used"});
 			}
-			for(int i=0; i<2; i++){
+			for(int i=0; i<3; i++){
 				database.add(new String[]{""+i+14,"Fall",i+"/2/13","6:00pm","fall convo "+i,"This is a description of the data that will be used"});
 				database.add(new String[]{""+i+16,"Spring",i+"/2/14","6:00pm","spring convo "+i,"This is a description of the data that will be used"});
 			}
@@ -113,9 +135,9 @@ public class MainActivity extends SherlockFragmentActivity
 		if(number == 0){
 			//run through the database add it to the display.  
 			for(int i = 0; i< database.size(); i++){
-				//if(database.get(i)[0].equals(semester)){
+				if(database.get(i)[1].equals(semester)){
 					dbDisplay.add(database.get(i));
-				//}
+				}
 			}
 		}
 		
@@ -124,9 +146,9 @@ public class MainActivity extends SherlockFragmentActivity
 			//run through the database 
 			for(int i = 0; i< database.size(); i++){
 				//get the first character from the time slot. 
-				char time = database.get(i)[2].charAt(0);
+				char time = database.get(i)[3].charAt(0);
 				// if that is equal to 3, add it to the display list. 
-				if((time == '3')&& database.get(i)[0].equals(semester)){
+				if((time == '3')&& database.get(i)[1].equals(semester)){
 					dbDisplay.add(database.get(i));
 				}
 			}
@@ -137,9 +159,9 @@ public class MainActivity extends SherlockFragmentActivity
 			//run through the database 
 			for(int i = 0; i< database.size(); i++){
 				//get the first character from the time slot. 
-				char time = database.get(i)[2].charAt(0);
+				char time = database.get(i)[3].charAt(0);
 				// if that is equal to 8, add it to the display list. 
-				if((time == '8')&& database.get(i)[0].equals(semester)){
+				if((time == '8')&& database.get(i)[1].equals(semester)){
 					dbDisplay.add(database.get(i));
 				}
 			}
@@ -150,9 +172,9 @@ public class MainActivity extends SherlockFragmentActivity
 			//run through the database 
 			for(int i = 0; i< database.size(); i++){
 				//get the first character from the time slot. 
-				char time = database.get(i)[2].charAt(0);
+				char time = database.get(i)[3].charAt(0);
 				// if that is not equal to 3 or 8, add it to the display list. 
-				if((time !='3')&&(time !='8')&& database.get(i)[0].equals(semester)){
+				if((time !='3')&&(time !='8')&& database.get(i)[1].equals(semester)){
 					dbDisplay.add(database.get(i));
 				}
 			}
@@ -172,21 +194,48 @@ public class MainActivity extends SherlockFragmentActivity
 		ArticleFragment articleFrag = (ArticleFragment) getSupportFragmentManager().findFragmentById(R.id.article_frame);
 		// pass the position from the selected menu to the article. 
 		// this will be the dbDisplay later. 
-		articleFrag.updateArticle(database.get(position));
+		articleFrag.updateArticle(dbDisplay.get(position));
+		return ;
+		// Later add if == null, then we are in the phone view. 
+		
+	}
+	
+	public void displayMenuData(){
+		
+		// this find the ArticleFragment frame and give it a variable name. 
+		MenuFragment menuFrag = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_frame);
+		// pass the position from the selected menu to the article. 
+		// this will be the dbDisplay later. 
+		menuFrag.updateMenu(dbDisplay);
 		return ;
 		// Later add if == null, then we are in the phone view. 
 		
 	}
 	
 	
-	/*IGNORE
-	 * public void passData(){
-		MenuFragment menuFrag = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_frame);
-		menuFrag.setDisplayData(dbDisplay);
-	}*/
-	
-	
-	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getTitle().equals("Fall")){
+			semester = "Fall";
+			sortData(3);
+			displayMenuData();
+			
+			
+		}
+		else if(item.getTitle().equals("Spring")){
+			semester = "Spring";
+			sortData(3);
+		     displayMenuData();
+		}
+		else if(item.getTitle().equals("Settings")){
+			
+		}
+		else if(item.getTitle().equals("About")){
+			
+		}
+		
+	    
+    	return true;
+	}
 	/*
 	 * To Do:
 	 * 

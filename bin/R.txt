@@ -263,6 +263,7 @@ int drawable abs__textfield_searchview_right_holo_dark 0x7f02006d
 int drawable abs__textfield_searchview_right_holo_light 0x7f02006e
 int drawable ic_launcher 0x7f02006f
 int drawable shadow 0x7f020070
+int id ALL 0x7f040042
 int id ConvoDate 0x7f040039
 int id ConvoDescription 0x7f04003b
 int id ConvoTime 0x7f04003a
@@ -308,7 +309,7 @@ int id abs__textButton 0x7f040018
 int id abs__title 0x7f040020
 int id abs__titleDivider 0x7f040021
 int id abs__up 0x7f04000b
-int id action_settings 0x7f040043
+int id action_settings 0x7f040044
 int id article_frame 0x7f040041
 int id disableHome 0x7f040009
 int id edit_query 0x7f04002c
@@ -327,7 +328,7 @@ int id selected_view 0x7f040014
 int id showCustom 0x7f040008
 int id showHome 0x7f040005
 int id showTitle 0x7f040007
-int id slidingmenumain 0x7f040042
+int id slidingmenumain 0x7f040043
 int id tabMode 0x7f040003
 int id useLogo 0x7f040004
 int id wrap_content 0x7f040000

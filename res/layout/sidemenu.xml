@@ -4,21 +4,24 @@
     android:layout_height="match_parent"
 	android:orientation="vertical"
 	android:paddingLeft="15dp"
-	android:paddingTop="15dp" 
-    tools:context=".MainActivity" >
+	android:paddingTop="15dp" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button 
+        android:id="@+id/ALL"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/all_button" 
         android:textSize="30sp"
+        android:onClick=""
         />
+    
     	
   	<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/afternoon_button"
-        android:textSize="30sp" />
+        android:textSize="30sp" 
+        android:onClick=""/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
