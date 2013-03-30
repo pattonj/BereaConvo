@@ -3,19 +3,13 @@ package com.jacob.patton.bereaconvo;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-
 import com.slidingmenu.lib.SlidingMenu;
 
 /*
@@ -32,12 +26,26 @@ public class MainActivity extends SherlockFragmentActivity
 	// needs to be a final public string that changes when the tab is pushed. 
 	public String semester = "Fall"; 
 	
+	//needs to be a final string that keeps track of how to sort the data
+	public int sortID = 0;
+	
 	//the database to be displayed. 
 	public List<String[]> dbDisplay;
 	
-	
+	public SlidingMenu menu;
+	//sets the buttons variable for the side buttons. 
+	public Button allButton ;
+    public Button afternoonButton;
+    public Button eveningButton ;
+    public Button specialButton ;
+    
+    
 	// creates the side sliding menu. 
 	public boolean onCreateOptionsMenu(Menu menu) {
+		// The display arrow drawable is set via style. 
+		// See the slidingmenu list for an example. 
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		
         menu.add("Fall")
         	.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
@@ -60,9 +68,10 @@ public class MainActivity extends SherlockFragmentActivity
 			super.onCreate(savedInstanceState);
 			// set content view
 			setContentView(R.layout.main_fragment_activity);
-		
+			
+			
 	        // configure the SlidingMenu
-	        SlidingMenu menu = new SlidingMenu(this);
+			menu = new SlidingMenu(this);
 	        menu.setMode(SlidingMenu.LEFT);
 	        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 	        menu.setShadowWidthRes(R.dimen.shadow_width);
@@ -72,24 +81,67 @@ public class MainActivity extends SherlockFragmentActivity
 	        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
 	        menu.setMenu(R.layout.sidemenu);
 	        
+	        createMaster();
+		     //sorts the data. 
+		     sortData();
+		       
 	        
-	        
-	         Button button = (Button) menu.findViewById(R.id.ALL);
-	         button.setOnClickListener(new View.OnClickListener() {
+	         allButton = (Button) menu.findViewById(R.id.ALL);
+	         afternoonButton = (Button) menu.findViewById(R.id.AFTERNOON);
+	         eveningButton = (Button) menu.findViewById(R.id.EVENING);
+	         specialButton = (Button) menu.findViewById(R.id.SPECIAL);
+	         
+	         
+	         allButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
 	                 // Perform action on click
-	            	 sortData(0);
-	            	 displayMenuData();
+	            	 sortID = 0;
+	            	 sortData();
+	            	 
 	            	 
 	             }
 	         });
 	        
+	         
+	         
+	         afternoonButton.setOnClickListener(new View.OnClickListener() {
+	             public void onClick(View v) {
+	                 // Perform action on click
+	            	 sortID = 1;
+	            	 sortData();
+	            	 
+	            	 
+	            	 
+	             }
+	         });
+	         
+	         eveningButton.setOnClickListener(new View.OnClickListener() {
+	             public void onClick(View v) {
+	                 // Perform action on click
+	            	 sortID = 2;
+	            	 sortData();
+	            	 //Should it automatically close the sliding menu? 
+	            	 menu.showContent();
+	            	 
+	            	 
+	             }
+	         });
+	         
+	         specialButton.setOnClickListener(new View.OnClickListener() {
+	             public void onClick(View v) {
+	                 // Perform action on click
+	            	 sortID = 3;
+	            	 sortData();
+	            	 menu.showContent();
+	            	 
+	            	 
+	             }
+	         });
+	         
 	        
 	        
-	        // creating master database. 
-	       createMaster();
-	       sortData(3);
-	       displayMenuData();
+	        
+
 	              
 	    }	
 
@@ -125,14 +177,14 @@ public class MainActivity extends SherlockFragmentActivity
 	 *0=all, 1=afternoon, 2=evening, 3=special
 	 *
 	 */	
-	public void sortData(int number){
+	public void sortData(){
 		
 		
 		// overwrites the old display every time it runs. 
 		dbDisplay = new ArrayList<String[]>();
 		
 		// if 0, copy the current semester to dbDisplay
-		if(number == 0){
+		if(sortID == 0){
 			//run through the database add it to the display.  
 			for(int i = 0; i< database.size(); i++){
 				if(database.get(i)[1].equals(semester)){
@@ -142,7 +194,7 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 		
 		// if 1, check for afternoon convos
-		else if(number == 1){
+		else if(sortID == 1){
 			//run through the database 
 			for(int i = 0; i< database.size(); i++){
 				//get the first character from the time slot. 
@@ -155,7 +207,7 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 		
 		// if 2, check for evening convos
-		else if(number == 2){
+		else if(sortID == 2){
 			//run through the database 
 			for(int i = 0; i< database.size(); i++){
 				//get the first character from the time slot. 
@@ -168,7 +220,7 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 		
 		// if 3, check for special convos
-		else if(number == 3){
+		else if(sortID == 3){
 			//run through the database 
 			for(int i = 0; i< database.size(); i++){
 				//get the first character from the time slot. 
@@ -180,7 +232,11 @@ public class MainActivity extends SherlockFragmentActivity
 			}
 		}
 		
-		
+		// this find the ArticleFragment frame and give it a variable name. 
+		MenuFragment menuFrag = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_frame);
+		// pass the position from the selected menu to the article. 
+		// this will be the dbDisplay later. 
+		menuFrag.updateMenu(dbDisplay);
 		
 	}
 	/**
@@ -200,6 +256,7 @@ public class MainActivity extends SherlockFragmentActivity
 		
 	}
 	
+	// NO LONGER USED. Incorporated into sort data. 
 	public void displayMenuData(){
 		
 		// this find the ArticleFragment frame and give it a variable name. 
@@ -216,26 +273,45 @@ public class MainActivity extends SherlockFragmentActivity
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getTitle().equals("Fall")){
 			semester = "Fall";
-			sortData(3);
-			displayMenuData();
+			sortData();
+			
 			
 			
 		}
 		else if(item.getTitle().equals("Spring")){
 			semester = "Spring";
-			sortData(3);
-		     displayMenuData();
+			sortData();
+		     
 		}
 		else if(item.getTitle().equals("Settings")){
 			
 		}
 		else if(item.getTitle().equals("About")){
-			
+			new AlertDialog.Builder(this)
+		    .setTitle("About")
+		    .setMessage(R.string.about)
+		    /*.setNegativeButton("close", new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int which) { 
+		            // do nothing
+		        }
+		     })*/
+		     .show();
 		}
 		
 	    
     	return true;
 	}
+	
+	//this is what happens when the back button is pressed
+	public void onBackPressed() {
+		if (menu.isMenuShowing()) {
+			menu.showContent();
+		} else {
+			super.onBackPressed();
+		}
+	}
+	
+	
 	/*
 	 * To Do:
 	 * 

@@ -17,4 +17,5 @@
 	<string name ="convo_time">3:00pm - 4:00pm</string>
 	<string name="convo_description">This is the main text to show convocation information to the use.</string>
 	
+	<string name="about"> "\nThis app was created by Jacob Patton and Abraham Kali as part of the Advanded Android App class at Berea College. \n"</string>
 </resources>

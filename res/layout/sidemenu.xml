@@ -16,19 +16,22 @@
         />
     
     	
-  	<TextView
-        android:layout_width="wrap_content"
+  	<Button
+  	    android:id="@+id/AFTERNOON"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/afternoon_button"
         android:textSize="30sp" 
         android:onClick=""/>
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/EVENING"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/evening_button" 
         android:textSize="30sp"/>
-  	<TextView
-       	android:layout_width="wrap_content"
+  	<Button
+  	    android:id="@+id/SPECIAL"
+       	android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/special_button" 
         android:textSize="30sp"/>
