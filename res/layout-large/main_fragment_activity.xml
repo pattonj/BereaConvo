@@ -12,14 +12,14 @@
     
 
     <fragment
-        android:id="@+id/menu_frame_small"
+        android:id="@+id/menu_frame"
         android:name="com.jacob.patton.bereaconvo.MenuFragment"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
         android:layout_weight="1.2" />
 
     <fragment
-        android:id="@+id/article_frame_small"
+        android:id="@+id/article_frame"
         android:name="com.jacob.patton.bereaconvo.ArticleFragment"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
