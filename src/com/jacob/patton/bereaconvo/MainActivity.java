@@ -42,6 +42,7 @@ public class MainActivity extends SherlockFragmentActivity
     
     //a variable to keep track of if the side menu should be allowed to show. 
     public boolean showmenu = true;
+    public boolean smallLayout = false;
     
 	// creates the side sliding menu. 
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -52,12 +53,9 @@ public class MainActivity extends SherlockFragmentActivity
 		
 		
 		//sets the semester. 
-        menu.add("Fall")
+		menu.add(semester)
         	.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
         
-       //Removed to make it seem like a toggle button. 
-       // menu.add("Spring")
-         //   .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
         
         menu.add("Settings")
         	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
@@ -77,11 +75,11 @@ public class MainActivity extends SherlockFragmentActivity
 			
 			// if we find the id for small layout
 			// note, this takes a second  to find. - maybe improve in the future.
-			// It coudl use a t/f variable in the future after it was detected? 
 		if(findViewById(R.id.article_frame_small)!= null){
 				// find article fragment
 				ArticleFragment articleFrag = (ArticleFragment) getSupportFragmentManager().findFragmentById(R.id.article_frame_small);
-				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();  
+				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+				smallLayout = true;
 				//hide fragment and commit the change.  
 				ft.hide(articleFrag);
 				ft.commit(); 
@@ -104,7 +102,7 @@ public class MainActivity extends SherlockFragmentActivity
 		     //sorts the data. 
 		     sortData();
 		       
-	        // creates teh side buttons. 
+	        // creates the side buttons. 
 	         allButton = (Button) menu.findViewById(R.id.ALL);
 	         afternoonButton = (Button) menu.findViewById(R.id.AFTERNOON);
 	         eveningButton = (Button) menu.findViewById(R.id.EVENING);
@@ -202,18 +200,18 @@ public class MainActivity extends SherlockFragmentActivity
 		// overwrites the old display every time it runs. 
 		dbDisplay = new ArrayList<String[]>();
 		
-		// if 0, copy the current semester to dbDisplay
-		if(sortID == 0){
+		switch (sortID){
+		
+		case 0:// if 0, copy the current semester to dbDisplay
 			//run through the database add it to the display.  
 			for(int i = 0; i< database.size(); i++){
 				if(database.get(i)[1].equals(semester)){
 					dbDisplay.add(database.get(i));
 				}
 			}
-		}
-		
-		// if 1, check for afternoon convos
-		else if(sortID == 1){
+			break;
+			
+		case 1:// if 1, check for afternoon convos
 			//run through the database 
 			for(int i = 0; i< database.size(); i++){
 				//get the first character from the time slot. 
@@ -223,10 +221,8 @@ public class MainActivity extends SherlockFragmentActivity
 					dbDisplay.add(database.get(i));
 				}
 			}
-		}
-		
-		// if 2, check for evening convos
-		else if(sortID == 2){
+			break;
+		case 2:	// if 2, check for evening convos
 			//run through the database 
 			for(int i = 0; i< database.size(); i++){
 				//get the first character from the time slot. 
@@ -236,10 +232,9 @@ public class MainActivity extends SherlockFragmentActivity
 					dbDisplay.add(database.get(i));
 				}
 			}
-		}
-		
-		// if 3, check for special convos
-		else if(sortID == 3){
+			break;
+			
+		case 3: // if 3, check for special convos
 			//run through the database 
 			for(int i = 0; i< database.size(); i++){
 				//get the first character from the time slot. 
@@ -249,11 +244,16 @@ public class MainActivity extends SherlockFragmentActivity
 					dbDisplay.add(database.get(i));
 				}
 			}
+			break;
 		}
 		
 		
-		//if we find the small frame - this could be set with a t/f variable at earlier to make it quicker
-		if(findViewById(R.id.article_frame_small)!= null){
+		
+		
+		
+		
+		//if we found the small layout
+		if(smallLayout == true){
 			// get the menu frame and pass the data. 
 			MenuFragment menuFrag = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_frame_small);
 			menuFrag.updateMenu(dbDisplay);
@@ -274,10 +274,8 @@ public class MainActivity extends SherlockFragmentActivity
 	public void displayArticleData(int position){
 		
 		
-		
-		
 		// look to see if we are in small mode. 
-		if(findViewById(R.id.article_frame_small)!= null){
+		if(smallLayout == true){
 			// if so find both of the fragments and start transaction. 
 			ArticleFragment articleFrag = (ArticleFragment) getSupportFragmentManager().findFragmentById(R.id.article_frame_small);
 			MenuFragment menuFrag = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_frame_small);
@@ -286,12 +284,13 @@ public class MainActivity extends SherlockFragmentActivity
 			ft.hide(menuFrag);
 			// show article fragment.
 			ft.show(articleFrag);
-			//add it ot the stack to enable using back button. 
+			//add it to the stack to enable using back button. 
 			ft.addToBackStack(null);
 			// pass the article data. 
 			articleFrag.updateArticle(dbDisplay.get(position));
-			//disable the menus. 
+			// disable the semester (fall/spring) toggle and change how the back button works. 
 			showmenu = false;
+			// Do not show the sliding menu
 			menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 			//commit the change. 
 			ft.commit(); 
@@ -320,7 +319,6 @@ public class MainActivity extends SherlockFragmentActivity
 			sortData();
 			
 			
-			
 		}
 		else if(item.getTitle().equals("Spring")&& showmenu == true){
 			semester = "Fall";
@@ -345,13 +343,12 @@ public class MainActivity extends SherlockFragmentActivity
 			}
 			else if(showmenu== false){
 				showmenu=true;
-				getSupportActionBar().show();
 				menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 				super.onBackPressed();
 			}
 		}
 		
-	    
+	   
     	return true;
 	}
 	
@@ -361,7 +358,6 @@ public class MainActivity extends SherlockFragmentActivity
 			menu.showContent();
 		} else if(showmenu== false){
 				showmenu=true;
-				getSupportActionBar().show();
 				menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 				super.onBackPressed();
 		}
@@ -374,18 +370,14 @@ public class MainActivity extends SherlockFragmentActivity
 	/*
 	 * To Do:
 	 * 
-	 * Main Activity - 
-	 * Need to set a check to see if it's the first time or if the database does not exist. 
-	 * If it doesn't, it needs to create it. 
+	 * custom adapter -= to show time and date in the list menu. 
+	 * Also, Final values need to be set (for permanent storage)
+	 * We need to input real data or setup parse.
+	 * 			- Know when to update the parse database.  
+	 * We need to set a theme.
+	 * Implement settings.  
+	 * Add the ability to mark convos as attended, this means from the passed position, finding the ID and marking it.  
 	 * 
-	 *  Also, Final values need to be set (for permenant storage)  
-	 *  method for setting the semester.   
-	 * 
-	 * Later!
-	 * Add the ability to mark convos as attended, this means creating an ID # (DONE) and checkmark value to the array. 
-	 * (This would mean shifting the location for the arrays for certain things.)
-	 * (Also, when updated with completely new convos it would need to reset). 
-	 * (if only partial update, it would need to keep the convos attended).  
 	 * 
 	 */
 	
