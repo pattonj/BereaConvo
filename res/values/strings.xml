@@ -4,7 +4,6 @@
     <string name="app_name">Berea Convo</string>
     <string name="title_activity_main">Berea Convo</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="side_text">Convocation Name</string>
     <string name="main_text">This is the main text to show convocation information to the user</string>
     <string name ="all_button">All</string>

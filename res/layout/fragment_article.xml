@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/convo_title" 
-        android:textSize="15sp"/>   
+        android:textSize="20sp"/>   
       
       <LinearLayout 
       android:layout_width="match_parent"
@@ -25,18 +25,18 @@
       android:paddingBottom="10dp"
           >
 		      <TextView
-		        android:id="@+id/ConvoDate"
+		        android:id="@+id/ConvoTime"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="@string/convo_date" 
+		        android:text="@string/convo_time" 
 		        android:gravity="left" />
 		      
 		      <TextView
-		          android:id="@+id/ConvoTime"
+		          android:id="@+id/ConvoDate"
 		          android:layout_width="match_parent"
 		          android:layout_height="wrap_content"
 		          android:gravity="right"
-		          android:text="@string/convo_time" />
+		          android:text="@string/convo_date" />
 		      
 		</LinearLayout>		
 	<TextView
@@ -44,10 +44,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/convo_description" />
-	 <TextView
-        android:id="@+id/TextBoxArticle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
           
 </LinearLayout>

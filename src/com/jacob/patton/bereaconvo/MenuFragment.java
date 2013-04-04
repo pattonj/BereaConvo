@@ -2,6 +2,7 @@ package com.jacob.patton.bereaconvo;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
@@ -9,8 +10,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 
 import com.actionbarsherlock.app.SherlockListFragment;
@@ -21,11 +22,10 @@ public class MenuFragment extends SherlockListFragment{
 	
 	// setting the interface variable. 
 	onArticleSelected mainActivityCall;
+	 
 	
-	//Test Data
-	List<String[]> dbDisplay;
-	ArrayList<String> titles;
-	ArrayAdapter<String> myList;
+	SimpleAdapter myList2;
+	List<HashMap<String, String>> convodata;
 	
 	
 	
@@ -38,17 +38,13 @@ public class MenuFragment extends SherlockListFragment{
 	// This is for the list
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		// create the test data. 
-		titles = new ArrayList<String>();
-		// use the list adapter to create a new list from the titles string. 
-		// it uses the current activity (whcih is the getActivity)
-		// then it needs the simpl_list_item_1, which i'm not sure why.
-
-		 myList = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,titles);
-		// then it sets the list adapter. 
+				
+		convodata = new ArrayList<HashMap<String, String>>();
 		
-		
-		setListAdapter(myList);
+		String[] from = new String[] {"title", "date", "time"};
+		int[] to = new int[] {R.id.lvTitle,R.id.lvDate,R.id.lvTime};
+		myList2 = new SimpleAdapter(getActivity(),convodata,R.layout.listview_row,from, to);
+		setListAdapter(myList2);
 		
 	}
 	
@@ -79,27 +75,27 @@ public class MenuFragment extends SherlockListFragment{
 
 	public void onListItemClick(ListView l, View v, int position, long id) {
 	  // on click, whichever title you selected, it passes the position to the main activity which passes the correct array. 
-		
-	mainActivityCall.displayArticleData(position);
-	myList.notifyDataSetChanged();
 	
-	}
+	mainActivityCall.displayArticleData(position);
+		}
 
 
 	
 	
 	public void updateMenu(List<String[]> data){
-		 dbDisplay = new ArrayList<String[]>();
 		 
-		 titles.clear();
+		 convodata.clear();
+		 
+	        for(int i = 0; i < data.size(); i++){
+	            HashMap<String, String> map = new HashMap<String, String>();
+	            map.put("title", data.get(i)[4]);
+	            map.put("date", data.get(i)[3]);
+	            map.put("time", data.get(i)[2]);
+	            convodata.add(map);
+	        }
+		 
 		
-			for(int i=0 ; i <data.size();i++){
-				titles.add(data.get(i)[4]);
-			}
-			myList.notifyDataSetChanged();
+			myList2.notifyDataSetChanged();
 		}
 		
-	
-	
-	
 }

@@ -3,38 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 	android:orientation="vertical"
+	android:gravity="center_vertical"
 	android:paddingLeft="15dp"
 	android:paddingTop="15dp" >
 
-    <Button 
+    <TextView
         android:id="@+id/ALL"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/all_button" 
         android:textSize="30sp"
+        android:clickable="true"
         android:onClick=""
         />
     
     	
-  	<Button
+    
+  	<TextView
   	    android:id="@+id/AFTERNOON"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/afternoon_button"
         android:textSize="30sp" 
+        android:clickable="true"
         android:onClick=""/>
-    <Button
+    <TextView
         android:id="@+id/EVENING"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/evening_button" 
+        android:clickable="true"
         android:textSize="30sp"/>
-  	<Button
+  	<TextView
   	    android:id="@+id/SPECIAL"
        	android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/special_button" 
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        android:clickable="true"/>
     
 
 </LinearLayout>

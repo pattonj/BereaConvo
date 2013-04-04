@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -24,8 +26,16 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	//Master database
 	public List<String[]> database;
-	// needs to be a final public string that changes when the tab is pushed. 
+	
+	
+	
+	//this declares the final/storable version
+	static final String semester_Final = "semesterFinal";
+	// this declares the local variable. 
 	public String semester = "Fall"; 
+	
+	
+	
 	
 	//needs to be a final string that keeps track of how to sort the data
 	public int sortID = 0;
@@ -35,10 +45,11 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	public SlidingMenu menu;
 	//sets the buttons variable for the side buttons. 
-	public Button allButton ;
-    public Button afternoonButton;
-    public Button eveningButton ;
-    public Button specialButton ;
+	//public Button allButton ;
+	public TextView allButton ;
+    public TextView afternoonButton;
+    public TextView eveningButton ;
+    public TextView specialButton ;
     
     //a variable to keep track of if the side menu should be allowed to show. 
     public boolean showmenu = true;
@@ -103,10 +114,11 @@ public class MainActivity extends SherlockFragmentActivity
 		     sortData();
 		       
 	        // creates the side buttons. 
-	         allButton = (Button) menu.findViewById(R.id.ALL);
-	         afternoonButton = (Button) menu.findViewById(R.id.AFTERNOON);
-	         eveningButton = (Button) menu.findViewById(R.id.EVENING);
-	         specialButton = (Button) menu.findViewById(R.id.SPECIAL);
+	         //allButton = (Button) menu.findViewById(R.id.ALL);
+		     allButton = (TextView) menu.findViewById(R.id.ALL);
+		     afternoonButton = (TextView) menu.findViewById(R.id.AFTERNOON);
+	         eveningButton = (TextView) menu.findViewById(R.id.EVENING);
+	         specialButton = (TextView) menu.findViewById(R.id.SPECIAL);
 	         
 	         // sets the side button actions. 
 	         allButton.setOnClickListener(new View.OnClickListener() {
@@ -369,13 +381,11 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	/*
 	 * To Do:
-	 * 
-	 * custom adapter -= to show time and date in the list menu. 
+	 *  
+	 *  Create class for easy storage and modification of data. 
 	 * Also, Final values need to be set (for permanent storage)
-	 * We need to input real data or setup parse.
-	 * 			- Know when to update the parse database.  
 	 * We need to set a theme.
-	 * Implement settings.  
+	 * Implement settings. - Change to themes?   
 	 * Add the ability to mark convos as attended, this means from the passed position, finding the ID and marking it.  
 	 * 
 	 * 
