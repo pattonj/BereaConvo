@@ -262,10 +262,12 @@ int drawable abs__textfield_searchview_holo_light 0x7f02006c
 int drawable abs__textfield_searchview_right_holo_dark 0x7f02006d
 int drawable abs__textfield_searchview_right_holo_light 0x7f02006e
 int drawable bc_icon 0x7f02006f
-int drawable ic_launcher 0x7f020070
-int drawable indicator 0x7f020071
-int drawable new_indicator 0x7f020072
-int drawable shadow 0x7f020073
+int drawable blank 0x7f020070
+int drawable checkmark 0x7f020071
+int drawable ic_launcher 0x7f020072
+int drawable indicator 0x7f020073
+int drawable new_indicator 0x7f020074
+int drawable shadow 0x7f020075
 int id AFTERNOON 0x7f040046
 int id ALL 0x7f040045
 int id ConvoDate 0x7f04003a
@@ -323,10 +325,10 @@ int id fullscreen 0x7f040013
 int id homeAsUp 0x7f040006
 int id left 0x7f040010
 int id listMode 0x7f040002
-int id lvDate 0x7f04003e
-int id lvTime 0x7f04003f
+int id lvCheckmark 0x7f04003e
+int id lvDate 0x7f04003f
+int id lvTime 0x7f040040
 int id lvTitle 0x7f04003d
-int id lvetime 0x7f040040
 int id margin 0x7f040012
 int id menu_frame 0x7f040043
 int id menu_frame_small 0x7f040041
@@ -372,7 +374,7 @@ int layout sherlock_spinner_dropdown_item 0x7f03001b
 int layout sherlock_spinner_item 0x7f03001c
 int layout sidemenu 0x7f03001d
 int layout slidingmenumain 0x7f03001e
-int string about 0x7f09001c
+int string about 0x7f09001d
 int string abs__action_bar_home_description 0x7f090000
 int string abs__action_bar_up_description 0x7f090001
 int string abs__action_menu_overflow_description 0x7f090002
@@ -399,6 +401,7 @@ int string convo_title 0x7f090018
 int string evening_button 0x7f090016
 int string main_text 0x7f090013
 int string side_text 0x7f090012
+int string sliding_info 0x7f09001c
 int string special_button 0x7f090017
 int string title_activity_main 0x7f090010
 int style AppBaseTheme 0x7f0a0059

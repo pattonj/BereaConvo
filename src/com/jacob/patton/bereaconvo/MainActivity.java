@@ -1,15 +1,13 @@
 package com.jacob.patton.bereaconvo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -27,14 +25,14 @@ public class MainActivity extends SherlockFragmentActivity
 	//Master database
 	public List<String[]> database;
 	
+	// List of attended convos
+	public List<String> ConvoAttended;
 	
+	// the storable version of attended convos. 
+	public String storedIDS;
 	
-	//this declares the final/storable version
-	static final String semester_Final = "semesterFinal";
 	// this declares the local variable. 
 	public String semester = "Fall"; 
-	
-	
 	
 	
 	//needs to be a final string that keeps track of how to sort the data
@@ -42,10 +40,12 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	//the database to be displayed. 
 	public List<String[]> dbDisplay;
+
+	// sets the sliding menu
 	
 	public SlidingMenu menu;
-	//sets the buttons variable for the side buttons. 
-	//public Button allButton ;
+	
+	//sets the text/button variable for the side buttons. 
 	public TextView allButton ;
     public TextView afternoonButton;
     public TextView eveningButton ;
@@ -53,9 +53,10 @@ public class MainActivity extends SherlockFragmentActivity
     
     //a variable to keep track of if the side menu should be allowed to show. 
     public boolean showmenu = true;
+    //a variable to keep track of if we are in small or large mode. 
     public boolean smallLayout = false;
     
-	// creates the side sliding menu. 
+	// creates menus. 
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		//This enables the back/up arrow in the top left corner, which lets the user know there is a menu. 
@@ -63,7 +64,7 @@ public class MainActivity extends SherlockFragmentActivity
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		
-		//sets the semester. 
+		//sets the semester button. 
 		menu.add(semester)
         	.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
         
@@ -76,6 +77,7 @@ public class MainActivity extends SherlockFragmentActivity
         
         return true;
     }
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +116,7 @@ public class MainActivity extends SherlockFragmentActivity
 		     sortData();
 		       
 	        // creates the side buttons. 
-	         //allButton = (Button) menu.findViewById(R.id.ALL);
-		     allButton = (TextView) menu.findViewById(R.id.ALL);
+	          allButton = (TextView) menu.findViewById(R.id.ALL);
 		     afternoonButton = (TextView) menu.findViewById(R.id.AFTERNOON);
 	         eveningButton = (TextView) menu.findViewById(R.id.EVENING);
 	         specialButton = (TextView) menu.findViewById(R.id.SPECIAL);
@@ -180,24 +181,42 @@ public class MainActivity extends SherlockFragmentActivity
 	 * [ID,semester, date,time, Title, description]
 	 */
 	private void createMaster(){
-		// creates master database list 
-		// Currently this is random, later this will be where the parse goes. 
-		// this could be set via a class as well. 
-		// This is used instead of two separate semester lists as to make parsing data easier down the road.
+		
 		// The array is as follows [ID,semester, date,time, Title, description]
-		 database = new ArrayList<String[]>();
-			for(int i=0; i<5; i++){
-				database.add(new String[]{""+i,"Fall",i+"/8/12","3:00pm","fall convo "+i ,"This is a description of the data that will be used"});
-				database.add(new String[]{""+i+5,"Spring",i+"/2/13","3:00pm","spring convo "+i, "This is a description of the data that will be used"});
+		
+		// Breaks up the stored string
+		// used to store the text to make sure 
+		
+		
+		
+		
+			
+		
+		//creates a copy of the data class
+		DataStored data = new DataStored();
+		//creates temporary list for storage and copies the data. 
+		List<String[]> temp = new ArrayList<String[]>();
+		temp.addAll(data.createdata());
+		// creates our new database
+		database = new ArrayList<String[]>();
+		
+		// checks to make sure we have data in the string before trying to add it. 
+		if(storedIDS == null){
+			int size = temp.size();
+			for(int i =0; i<size; i++){
+				storedIDS += "1;";
 			}
-			for(int i=0; i<2; i++){
-				database.add(new String[]{""+i+10,"Fall",i+"/2/13","8:00pm","fall convo "+i,"This is a description of the data that will be used"});
-				database.add(new String[]{""+i+12,"Spring",i+"/2/14","8:00pm","Spring convo "+i,"This is a description of the data that will be used"});
-			}
-			for(int i=0; i<3; i++){
-				database.add(new String[]{""+i+14,"Fall",i+"/2/13","6:00pm","fall convo "+i,"This is a description of the data that will be used"});
-				database.add(new String[]{""+i+16,"Spring",i+"/2/14","6:00pm","spring convo "+i,"This is a description of the data that will be used"});
-			}
+		}
+		
+		ConvoAttended = new ArrayList<String>(Arrays.asList(storedIDS.split(";")));
+			
+		// this merges our data together
+		for(int i=0;i <temp.size();i++){
+			database.add(new String[]{temp.get(i)[0],temp.get(i)[1],temp.get(i)[2],temp.get(i)[3],temp.get(i)[4],temp.get(i)[5],ConvoAttended.get(i)});
+			
+		}
+		
+		
 	}
 	
 	/**
@@ -264,7 +283,7 @@ public class MainActivity extends SherlockFragmentActivity
 		
 		
 		
-		//if we found the small layout
+		//if we found the small layout earlier
 		if(smallLayout == true){
 			// get the menu frame and pass the data. 
 			MenuFragment menuFrag = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_frame_small);
@@ -273,8 +292,7 @@ public class MainActivity extends SherlockFragmentActivity
 		else{
 			// this find the ArticleFragment frame and give it a variable name. 
 			MenuFragment menuFrag = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_frame);
-			// pass the position from the selected menu to the article. 
-			// this will be the dbDisplay later. 
+			// pass the position from the selected menu to the article.  
 			menuFrag.updateMenu(dbDisplay);
 		}
 	}
@@ -314,6 +332,7 @@ public class MainActivity extends SherlockFragmentActivity
 			ArticleFragment articleFrag = (ArticleFragment) getSupportFragmentManager().findFragmentById(R.id.article_frame);
 			// pass the position from the selected menu to the article. 
 			articleFrag.updateArticle(dbDisplay.get(position));
+			
 			// Later add if == null, then we are in the phone view. 
 		}
 	}
@@ -366,26 +385,84 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	//this is what happens when the back button is pressed
 	public void onBackPressed() {
+		
+		// if the menu is showing, close it. 
 		if (menu.isMenuShowing()) {
 			menu.showContent();
-		} else if(showmenu== false){
+			
+		} 
+		// if in article mode, enable menus again and go back. 
+		else if(showmenu== false){
 				showmenu=true;
 				menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 				super.onBackPressed();
 		}
+		// otherwise, just go back. 
 		else{
 			super.onBackPressed();
 		}
 	}
 	
+	public void markConvo(int position){
+	
+		// turns the id int and integer for the list
+		String convoID = dbDisplay.get(position)[0];
+		// this is creating the list, which coudl be done earlier
+	
+		// Adding the ID to the list.
+		for(int i =0; i<database.size();i++){
+			String ID = database.get(i)[0];
+			if(convoID == ID ){
+				if(database.get(i)[6] == "0"){
+					database.get(i)[6] = "1";
+				}
+		 		else{
+		 			database.get(i)[6] = "0";
+		 		}
+				sortData();
+		return;
+			}
+		}			
+	}
+	/*	
+		
+	public void saveFinalAttended(){	
+		
+		//adding to the string for saving.
+		// Start with blank string
+		storedIDS = "";
+		// loop through adding the id to the string
+		
+		for(int i=0;i< ConvoAttended.size();i++){
+			storedIDS+= ConvoAttended.get(i);
+			// put the semicolon to split the id's. 
+			storedIDS+= ";";
+		}
+		
+		
+		
+		
+		
+		
+	} */
+	
+	/*
+	 * need to be able to split a string up and merge it into the array. 
+	 * also need to be able to take the array and make it one long string
+	 * 
+	 *  
+	 * 
+	 */
+	
 	
 	/*
 	 * To Do:
 	 *  
-	 *  Create class for easy storage and modification of data. 
 	 * Also, Final values need to be set (for permanent storage)
 	 * We need to set a theme.
 	 * Implement settings. - Change to themes?   
+	 * 
+	 * 
 	 * Add the ability to mark convos as attended, this means from the passed position, finding the ID and marking it.  
 	 * 
 	 * 

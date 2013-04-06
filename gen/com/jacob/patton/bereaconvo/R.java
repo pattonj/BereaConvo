@@ -1037,10 +1037,12 @@ containing a value of this type.
         public static final int abs__textfield_searchview_right_holo_dark=0x7f02006d;
         public static final int abs__textfield_searchview_right_holo_light=0x7f02006e;
         public static final int bc_icon=0x7f02006f;
-        public static final int ic_launcher=0x7f020070;
-        public static final int indicator=0x7f020071;
-        public static final int new_indicator=0x7f020072;
-        public static final int shadow=0x7f020073;
+        public static final int blank=0x7f020070;
+        public static final int checkmark=0x7f020071;
+        public static final int ic_launcher=0x7f020072;
+        public static final int indicator=0x7f020073;
+        public static final int new_indicator=0x7f020074;
+        public static final int shadow=0x7f020075;
     }
     public static final class id {
         public static final int AFTERNOON=0x7f040046;
@@ -1100,10 +1102,10 @@ containing a value of this type.
         public static final int homeAsUp=0x7f040006;
         public static final int left=0x7f040010;
         public static final int listMode=0x7f040002;
-        public static final int lvDate=0x7f04003e;
-        public static final int lvTime=0x7f04003f;
+        public static final int lvCheckmark=0x7f04003e;
+        public static final int lvDate=0x7f04003f;
+        public static final int lvTime=0x7f040040;
         public static final int lvTitle=0x7f04003d;
-        public static final int lvetime=0x7f040040;
         public static final int margin=0x7f040012;
         public static final int menu_frame=0x7f040043;
         public static final int menu_frame_small=0x7f040041;
@@ -1155,7 +1157,7 @@ containing a value of this type.
         public static final int slidingmenumain=0x7f03001e;
     }
     public static final class string {
-        public static final int about=0x7f09001c;
+        public static final int about=0x7f09001d;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abs__action_bar_home_description=0x7f090000;
@@ -1212,6 +1214,7 @@ containing a value of this type.
         public static final int evening_button=0x7f090016;
         public static final int main_text=0x7f090013;
         public static final int side_text=0x7f090012;
+        public static final int sliding_info=0x7f09001c;
         public static final int special_button=0x7f090017;
         public static final int title_activity_main=0x7f090010;
     }

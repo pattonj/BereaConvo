@@ -3,28 +3,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 	android:orientation="vertical"
-	android:gravity="center_vertical"
 	android:paddingLeft="15dp"
 	android:paddingTop="15dp" >
 
+    
+    <TextView 
+       
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sliding_info" 
+        android:paddingBottom="5dp"
+        android:textSize="25sp"
+     />
+    
+     <View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1dip"
+	    android:background="#CCCCCC" 
+	     />
+	    
     <TextView
         android:id="@+id/ALL"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/all_button" 
-        android:textSize="30sp"
+        android:textSize="20sp"
+        android:paddingBottom="5dp"
         android:clickable="true"
         android:onClick=""
         />
     
     	
+
     
   	<TextView
   	    android:id="@+id/AFTERNOON"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/afternoon_button"
-        android:textSize="30sp" 
+        android:textSize="20sp" 
+        android:paddingBottom="5dp"
         android:clickable="true"
         android:onClick=""/>
     <TextView
@@ -33,14 +51,17 @@
         android:layout_height="wrap_content"
         android:text="@string/evening_button" 
         android:clickable="true"
-        android:textSize="30sp"/>
+        android:textSize="20sp"
+        android:paddingBottom="5dp"
+        />
   	<TextView
   	    android:id="@+id/SPECIAL"
        	android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/special_button" 
-        android:textSize="30sp"
-        android:clickable="true"/>
+        android:textSize="20sp"
+        android:clickable="true"
+        android:paddingBottom="5dp"/>
     
 
 </LinearLayout>
