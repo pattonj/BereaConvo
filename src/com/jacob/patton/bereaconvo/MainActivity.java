@@ -212,7 +212,7 @@ public class MainActivity extends SherlockFragmentActivity
 			
 		// this merges our data together
 		for(int i=0;i <temp.size();i++){
-			database.add(new String[]{temp.get(i)[0],temp.get(i)[1],temp.get(i)[2],temp.get(i)[3],temp.get(i)[4],temp.get(i)[5],ConvoAttended.get(i)});
+			database.add(new String[]{temp.get(i)[0],temp.get(i)[1],temp.get(i)[2],temp.get(i)[3],temp.get(i)[4],temp.get(i)[5],temp.get(i)[6],ConvoAttended.get(i)});
 			
 		}
 		
@@ -413,11 +413,11 @@ public class MainActivity extends SherlockFragmentActivity
 		for(int i =0; i<database.size();i++){
 			String ID = database.get(i)[0];
 			if(convoID == ID ){
-				if(database.get(i)[6] == "0"){
-					database.get(i)[6] = "1";
+				if(database.get(i)[7] == "0"){
+					database.get(i)[7] = "1";
 				}
 		 		else{
-		 			database.get(i)[6] = "0";
+		 			database.get(i)[7] = "0";
 		 		}
 				sortData();
 		return;
@@ -458,12 +458,13 @@ public class MainActivity extends SherlockFragmentActivity
 	/*
 	 * To Do:
 	 *  
-	 * Also, Final values need to be set (for permanent storage)
-	 * We need to set a theme.
+	 * Also, Final values need to be set for create/destroy. 
+	 * We need to set a theme, tweaking layout. 
+	 * Add convo adttended button. 
 	 * Implement settings. - Change to themes?   
 	 * 
 	 * 
-	 * Add the ability to mark convos as attended, this means from the passed position, finding the ID and marking it.  
+	 *   
 	 * 
 	 * 
 	 */

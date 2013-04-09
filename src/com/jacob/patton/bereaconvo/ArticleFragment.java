@@ -18,6 +18,7 @@ public class ArticleFragment extends SherlockFragment{
 	TextView convoDate;
 	TextView convoTime;
 	TextView convoDescription;
+	TextView convoSpeaker;
 	String[] toDisplay;
 	
 	
@@ -53,10 +54,14 @@ public class ArticleFragment extends SherlockFragment{
 		// find and set convo time. 	
 		convoTime = (TextView) getView().findViewById(R.id.ConvoTime);
 			convoTime.setText(data[3]);
+
+		// find and set convo speaker. 	
+		convoSpeaker = (TextView) getView().findViewById(R.id.ConvoSpeaker);
+			convoSpeaker.setText(data[5]);		
 			
 		// find and set description. 	
 		convoDescription = (TextView) getView().findViewById(R.id.ConvoDescription);
-			convoDescription.setText(data[5]);
+			convoDescription.setText(data[6]);
 	}
 	
 }
