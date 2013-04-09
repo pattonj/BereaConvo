@@ -124,8 +124,8 @@ public class MenuFragment extends SherlockListFragment{
 	            map.put("title", data.get(i)[4]);
 	            map.put("date", data.get(i)[3]);
 	            map.put("time", data.get(i)[2]);
-	            if(data.get(i)[7]=="0"){
-	            	map.put("checkmark", null);
+	            if(data.get(i)[7].equals("0")){
+	            	map.put("checkmark", R.drawable.shadow_checkmark);
 	            }
 	            else{
 	            	map.put("checkmark", R.drawable.green_checkmark);

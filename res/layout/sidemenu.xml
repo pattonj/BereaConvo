@@ -21,16 +21,19 @@
 	    android:layout_height="1dip"
 	    android:background="#CCCCCC" 
 	     />
-	    
+	 
+     
+     
+     
     <TextView
         android:id="@+id/ALL"
+        android:drawableLeft="@drawable/all_convos"
+        android:drawablePadding="5dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/all_button" 
-        android:textSize="20sp"
-        android:paddingBottom="5dp"
-        android:clickable="true"
-        android:onClick=""
+        android:textSize="25sp"
+        android:paddingTop="10dp"
         />
     
     	
@@ -38,30 +41,37 @@
     
   	<TextView
   	    android:id="@+id/AFTERNOON"
+        android:drawableLeft="@drawable/afternoon_convos"
+        android:drawablePadding="5dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/afternoon_button"
-        android:textSize="20sp" 
-        android:paddingBottom="5dp"
-        android:clickable="true"
-        android:onClick=""/>
+        android:textSize="25sp" 
+        android:paddingTop="10dp"
+       /> 
+    
     <TextView
         android:id="@+id/EVENING"
+        android:drawableLeft="@drawable/evening_convos"
+        android:drawablePadding="5dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/evening_button" 
         android:clickable="true"
-        android:textSize="20sp"
-        android:paddingBottom="5dp"
+        android:textSize="25sp"
+        android:paddingTop="10dp"
         />
+    
   	<TextView
   	    android:id="@+id/SPECIAL"
+  	    android:drawableLeft="@drawable/special_convos"
+  	    android:drawablePadding="5dp"
        	android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/special_button" 
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:clickable="true"
-        android:paddingBottom="5dp"/>
+        android:paddingTop="10dp"/>
     
 
 </LinearLayout>

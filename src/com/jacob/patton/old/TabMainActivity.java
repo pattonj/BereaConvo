@@ -52,12 +52,12 @@ public class TabMainActivity extends SherlockActivity implements ActionBar.TabLi
     public void onTabSelected(Tab tab, FragmentTransaction transaction) {
     	
     	if(tab.getText()== "Fall"){
-    		TextView textbox = (TextView)findViewById(R.id.TextBoxArticle);
+    		TextView textbox = (TextView)findViewById(R.id.ConvoDate);
        	 textbox.setText("Fall 2012 Convos!");
     	}
     	
     	if(tab.getText()== "Spring"){
-    		TextView textbox = (TextView)findViewById(R.id.TextBoxArticle);
+    		TextView textbox = (TextView)findViewById(R.id.ConvoDate);
        	 textbox.setText("Spring 2013 Convos!");
     	}
     	

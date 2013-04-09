@@ -1,7 +1,6 @@
 package com.jacob.patton.bereaconvo;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -24,25 +23,24 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	//Master database
 	public List<String[]> database;
-	
-	// List of attended convos
-	public List<String> ConvoAttended;
-	
+
 	// the storable version of attended convos. 
-	public String storedIDS;
+	public String storedAttendance="";
+	static final String STORED_CONVOS ="storedConvos";
 	
 	// this declares the local variable. 
 	public String semester = "Fall"; 
+	static final String STORED_SEMESTER ="storedSemester";
 	
 	
 	//needs to be a final string that keeps track of how to sort the data
 	public int sortID = 0;
+	static final String STORED_SORT ="storedSort";
 	
 	//the database to be displayed. 
 	public List<String[]> dbDisplay;
 
 	// sets the sliding menu
-	
 	public SlidingMenu menu;
 	
 	//sets the text/button variable for the side buttons. 
@@ -127,6 +125,7 @@ public class MainActivity extends SherlockFragmentActivity
 	                 // Perform action on click
 	            	 sortID = 0;
 	            	 sortData();
+	            	 menu.showContent();
 	            	 
 	            	 
 	             }
@@ -139,6 +138,7 @@ public class MainActivity extends SherlockFragmentActivity
 	                 // Perform action on click
 	            	 sortID = 1;
 	            	 sortData();
+	            	 menu.showContent();
 	            	 
 	            	 
 	            	 
@@ -201,18 +201,20 @@ public class MainActivity extends SherlockFragmentActivity
 		database = new ArrayList<String[]>();
 		
 		// checks to make sure we have data in the string before trying to add it. 
-		if(storedIDS == null){
+		if(storedAttendance.equals("")){
 			int size = temp.size();
 			for(int i =0; i<size; i++){
-				storedIDS += "1;";
-			}
-		}
-		
-		ConvoAttended = new ArrayList<String>(Arrays.asList(storedIDS.split(";")));
+				storedAttendance += "0";
 			
+			
+			}
+		}	
+			
+		
+		
 		// this merges our data together
 		for(int i=0;i <temp.size();i++){
-			database.add(new String[]{temp.get(i)[0],temp.get(i)[1],temp.get(i)[2],temp.get(i)[3],temp.get(i)[4],temp.get(i)[5],temp.get(i)[6],ConvoAttended.get(i)});
+			database.add(new String[]{temp.get(i)[0],temp.get(i)[1],temp.get(i)[2],temp.get(i)[3],temp.get(i)[4],temp.get(i)[5],temp.get(i)[6],Character.toString(storedAttendance.charAt(i))});
 			
 		}
 		
@@ -333,7 +335,6 @@ public class MainActivity extends SherlockFragmentActivity
 			// pass the position from the selected menu to the article. 
 			articleFrag.updateArticle(dbDisplay.get(position));
 			
-			// Later add if == null, then we are in the phone view. 
 		}
 	}
 	
@@ -413,7 +414,7 @@ public class MainActivity extends SherlockFragmentActivity
 		for(int i =0; i<database.size();i++){
 			String ID = database.get(i)[0];
 			if(convoID == ID ){
-				if(database.get(i)[7] == "0"){
+				if(database.get(i)[7].equals("0")){
 					database.get(i)[7] = "1";
 				}
 		 		else{
@@ -424,36 +425,46 @@ public class MainActivity extends SherlockFragmentActivity
 			}
 		}			
 	}
-	/*	
+	
+	  @Override
+	public void onSaveInstanceState(Bundle savedInstanceState){
+		  saveFinalAttended();
+		  savedInstanceState.putString(STORED_CONVOS, storedAttendance);
+		  savedInstanceState.putString(STORED_SEMESTER, semester);
+		  savedInstanceState.putInt(STORED_SORT, sortID);
+	      // Always call the superclass so it can save the view hierarchy state
+		  super.onSaveInstanceState(savedInstanceState);
+	        }
+	  
+
+	  public void onRestoreInstanceState(Bundle savedInstanceState) {
+	    	 super.onRestoreInstanceState(savedInstanceState);
+	    	 storedAttendance = savedInstanceState.getString(STORED_CONVOS);
+	    	 semester = savedInstanceState.getString(STORED_SEMESTER);
+	    	 sortID = savedInstanceState.getInt(STORED_SORT);
+	    	 createMaster();
+	    	 sortData();
+	    	 
+	    }
+	    
+		
 		
 	public void saveFinalAttended(){	
 		
 		//adding to the string for saving.
 		// Start with blank string
-		storedIDS = "";
+		storedAttendance = "";
 		// loop through adding the id to the string
 		
-		for(int i=0;i< ConvoAttended.size();i++){
-			storedIDS+= ConvoAttended.get(i);
-			// put the semicolon to split the id's. 
-			storedIDS+= ";";
+		for(int i=0;i< database.size();i++){
+			storedAttendance+=database.get(i)[7] ;
 		}
 		
+			
 		
 		
 		
-		
-		
-	} */
-	
-	/*
-	 * need to be able to split a string up and merge it into the array. 
-	 * also need to be able to take the array and make it one long string
-	 * 
-	 *  
-	 * 
-	 */
-	
+	}
 	
 	/*
 	 * To Do:
