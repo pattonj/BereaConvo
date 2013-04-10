@@ -1,6 +1,7 @@
 package com.jacob.patton.bereaconvo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -11,11 +12,6 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
-
-/*
- * Change this to a fragment class using article fragment and title fragment
- * 
- */
 
 
 public class MainActivity extends SherlockFragmentActivity 
@@ -37,6 +33,10 @@ public class MainActivity extends SherlockFragmentActivity
 	public int sortID = 0;
 	static final String STORED_SORT ="storedSort";
 	
+	//
+	public int displayedArticle=0;
+	static final String STORED_POSITION ="storedPosition";
+	
 	//the database to be displayed. 
 	public List<String[]> dbDisplay;
 
@@ -49,8 +49,9 @@ public class MainActivity extends SherlockFragmentActivity
     public TextView eveningButton ;
     public TextView specialButton ;
     
-    //a variable to keep track of if the side menu should be allowed to show. 
+    //a variable to keep track of if the side menu/toggle should work. 
     public boolean showmenu = true;
+    
     //a variable to keep track of if we are in small or large mode. 
     public boolean smallLayout = false;
     
@@ -67,7 +68,7 @@ public class MainActivity extends SherlockFragmentActivity
         	.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
         
         
-        menu.add("Settings")
+        menu.add("Attendance")
         	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         
         menu.add("About")
@@ -95,7 +96,7 @@ public class MainActivity extends SherlockFragmentActivity
 				ft.hide(articleFrag);
 				ft.commit(); 
 				
-			}
+		}
 			
 	        // configure the SlidingMenu
 			menu = new SlidingMenu(this);
@@ -108,13 +109,25 @@ public class MainActivity extends SherlockFragmentActivity
 	        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
 	        menu.setMenu(R.layout.sidemenu);
 	        
+	        // This gets the current semester by month. 
+	        Calendar cal = Calendar.getInstance();
+	        int month = cal.get(Calendar.MONTH);
+	        
+	        if(month > 5 ){
+	        	semester = "Fall";
+	        }
+	        else{
+	        	semester ="Spring";
+	        }
+	        	
+	        	
 	        // Creates the data
 	        createMaster();
 		     //sorts the data. 
 		     sortData();
 		       
 	        // creates the side buttons. 
-	          allButton = (TextView) menu.findViewById(R.id.ALL);
+	         allButton = (TextView) menu.findViewById(R.id.ALL);
 		     afternoonButton = (TextView) menu.findViewById(R.id.AFTERNOON);
 	         eveningButton = (TextView) menu.findViewById(R.id.EVENING);
 	         specialButton = (TextView) menu.findViewById(R.id.SPECIAL);
@@ -122,12 +135,7 @@ public class MainActivity extends SherlockFragmentActivity
 	         // sets the side button actions. 
 	         allButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
-	                 // Perform action on click
-	            	 sortID = 0;
-	            	 sortData();
-	            	 menu.showContent();
-	            	 
-	            	 
+	            	sortDataClick(0);
 	             }
 	         });
 	        
@@ -135,23 +143,13 @@ public class MainActivity extends SherlockFragmentActivity
 	         
 	         afternoonButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
-	                 // Perform action on click
-	            	 sortID = 1;
-	            	 sortData();
-	            	 menu.showContent();
-	            	 
-	            	 
-	            	 
+	            	sortDataClick(1);
 	             }
 	         });
 	         
 	         eveningButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
-	                 // Perform action on click
-	            	 sortID = 2;
-	            	 sortData();
-	            	 //Should it automatically close the sliding menu? 
-	            	 menu.showContent();
+	            	sortDataClick(2);;
 	            	 
 	            	 
 	             }
@@ -159,13 +157,8 @@ public class MainActivity extends SherlockFragmentActivity
 	         
 	         specialButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
-	                 // Perform action on click
-	            	 sortID = 3;
-	            	 sortData();
-	            	 menu.showContent();
-	            	 
-	            	 
-	             }
+	                sortDataClick(3);
+	            }
 	         });
 	         
 	        
@@ -182,37 +175,33 @@ public class MainActivity extends SherlockFragmentActivity
 	 */
 	private void createMaster(){
 		
-		// The array is as follows [ID,semester, date,time, Title, description]
-		
-		// Breaks up the stored string
-		// used to store the text to make sure 
-		
-		
-		
-		
+		// The final array is as follows [ID,semester, date,time, Title,speaker, description, attended]
 			
-		
 		//creates a copy of the data class
 		DataStored data = new DataStored();
+		
 		//creates temporary list for storage and copies the data. 
 		List<String[]> temp = new ArrayList<String[]>();
 		temp.addAll(data.createdata());
+		
 		// creates our new database
 		database = new ArrayList<String[]>();
 		
 		// checks to make sure we have data in the string before trying to add it. 
 		if(storedAttendance.equals("")){
+			// if empty create zero's to merge with final array. 
 			int size = temp.size();
 			for(int i =0; i<size; i++){
 				storedAttendance += "0";
-			
-			
 			}
-		}	
+		}
+		// need an else if to access the stored preference data 
 			
 		
 		
 		// this merges our data together
+		// Gets the character from the attended string, which requires no splitting since it's only 1,0. 
+		
 		for(int i=0;i <temp.size();i++){
 			database.add(new String[]{temp.get(i)[0],temp.get(i)[1],temp.get(i)[2],temp.get(i)[3],temp.get(i)[4],temp.get(i)[5],temp.get(i)[6],Character.toString(storedAttendance.charAt(i))});
 			
@@ -220,6 +209,18 @@ public class MainActivity extends SherlockFragmentActivity
 		
 		
 	}
+	
+	/** 
+	 * Used by the side menu. 
+	 * @param ID
+	 */
+	private void sortDataClick(int option){
+		//This sets the sort ID, sorts the data and closes the side menu. 
+		sortID = option;
+		sortData();
+   	 	menu.showContent();
+	}
+	
 	
 	/**
 	 * This sorts the data depending on the number sent from sliding menu.  
@@ -283,8 +284,6 @@ public class MainActivity extends SherlockFragmentActivity
 		
 		
 		
-		
-		
 		//if we found the small layout earlier
 		if(smallLayout == true){
 			// get the menu frame and pass the data. 
@@ -298,6 +297,8 @@ public class MainActivity extends SherlockFragmentActivity
 			menuFrag.updateMenu(dbDisplay);
 		}
 	}
+	
+	
 	/**
 	 * This is used to pass the proper array over to
 	 * the Article fragment which then updates the text.
@@ -305,6 +306,8 @@ public class MainActivity extends SherlockFragmentActivity
 	 */
 	public void displayArticleData(int position){
 		
+		//set the article position in case of rotate/pause. 
+		displayedArticle = position;
 		
 		// look to see if we are in small mode. 
 		if(smallLayout == true){
@@ -338,13 +341,13 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 	}
 	
-
 	
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		//This is where the menu button actions are set. 
 		
+		// Toggle between fall and spring. 
 		if(item.getTitle().equals("Fall")&& showmenu == true){
 			semester = "Spring";
 			item.setTitle("Spring");
@@ -358,7 +361,7 @@ public class MainActivity extends SherlockFragmentActivity
 			sortData();
 		     
 		}
-		else if(item.getTitle().equals("Settings")){
+		else if(item.getTitle().equals("Attendance")){
 			
 		}
 		else if(item.getTitle().equals("About")){
@@ -408,47 +411,66 @@ public class MainActivity extends SherlockFragmentActivity
 	
 		// turns the id int and integer for the list
 		String convoID = dbDisplay.get(position)[0];
-		// this is creating the list, which coudl be done earlier
-	
+			
 		// Adding the ID to the list.
 		for(int i =0; i<database.size();i++){
 			String ID = database.get(i)[0];
 			if(convoID == ID ){
 				if(database.get(i)[7].equals("0")){
 					database.get(i)[7] = "1";
+					
 				}
 		 		else{
 		 			database.get(i)[7] = "0";
+		 			
 		 		}
+				
+				// This is needed to update the checkmarks. 
 				sortData();
-		return;
+				
+				// ends the for statement to save time. 
+				return;
+			
 			}
+			
 		}			
 	}
 	
+	
+	// when it needs to save the state, it does the following. 
 	  @Override
 	public void onSaveInstanceState(Bundle savedInstanceState){
 		  saveFinalAttended();
 		  savedInstanceState.putString(STORED_CONVOS, storedAttendance);
 		  savedInstanceState.putString(STORED_SEMESTER, semester);
 		  savedInstanceState.putInt(STORED_SORT, sortID);
+		  savedInstanceState.putInt(STORED_POSITION, displayedArticle);
+		  
 	      // Always call the superclass so it can save the view hierarchy state
 		  super.onSaveInstanceState(savedInstanceState);
 	        }
 	  
 
+	  // when it is recreated it does the following. 
 	  public void onRestoreInstanceState(Bundle savedInstanceState) {
 	    	 super.onRestoreInstanceState(savedInstanceState);
 	    	 storedAttendance = savedInstanceState.getString(STORED_CONVOS);
 	    	 semester = savedInstanceState.getString(STORED_SEMESTER);
 	    	 sortID = savedInstanceState.getInt(STORED_SORT);
+	    	 displayedArticle =savedInstanceState.getInt(STORED_POSITION);
 	    	 createMaster();
 	    	 sortData();
+	    	 
+	       	 if(smallLayout == false){
+	    		 displayArticleData(displayedArticle);
+	    	 }
 	    	 
 	    }
 	    
 		
-		
+	/*
+	 * used to save the attendance to a string. 	
+	 */
 	public void saveFinalAttended(){	
 		
 		//adding to the string for saving.
@@ -466,18 +488,16 @@ public class MainActivity extends SherlockFragmentActivity
 		
 	}
 	
+	
 	/*
 	 * To Do:
 	 *  
-	 * Also, Final values need to be set for create/destroy. 
+	 * Add a system preference string that can PERMEMENTALY store the convo data. 
+	 * 
 	 * We need to set a theme, tweaking layout. 
-	 * Add convo adttended button. 
-	 * Implement settings. - Change to themes?   
+	 * Implement change themese button. ?   
 	 * 
-	 * 
-	 *   
-	 * 
-	 * 
+		 * 
 	 */
 	
 }
