@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -33,9 +34,11 @@ public class MainActivity extends SherlockFragmentActivity
 	public int sortID = 0;
 	static final String STORED_SORT ="storedSort";
 	
-	//
+	//the article that is being displayed
 	public int displayedArticle=0;
 	static final String STORED_POSITION ="storedPosition";
+	public boolean displayingArticle = false;
+	static final String DISPLAYING_ARTICLE ="DisplayingArticle";
 	
 	//the database to be displayed. 
 	public List<String[]> dbDisplay;
@@ -51,6 +54,7 @@ public class MainActivity extends SherlockFragmentActivity
     
     //a variable to keep track of if the side menu/toggle should work. 
     public boolean showmenu = true;
+    
     
     //a variable to keep track of if we are in small or large mode. 
     public boolean smallLayout = false;
@@ -189,12 +193,20 @@ public class MainActivity extends SherlockFragmentActivity
 		
 		// checks to make sure we have data in the string before trying to add it. 
 		if(storedAttendance.equals("")){
+			
 			// if empty create zero's to merge with final array. 
 			int size = temp.size();
+			String storedAttendanceblank = "";
 			for(int i =0; i<size; i++){
-				storedAttendance += "0";
+				storedAttendanceblank += "0";
 			}
+			
+			SharedPreferences settings = getPreferences(0);
+		    storedAttendance = settings.getString("AttendedConvos", storedAttendanceblank);
+		       
+		       
 		}
+		
 		// need an else if to access the stored preference data 
 			
 		
@@ -306,8 +318,9 @@ public class MainActivity extends SherlockFragmentActivity
 	 */
 	public void displayArticleData(int position){
 		
-		//set the article position in case of rotate/pause. 
+		//set the article position and if displaying in case of rotate/pause. 
 		displayedArticle = position;
+		displayingArticle = true;
 		
 		// look to see if we are in small mode. 
 		if(smallLayout == true){
@@ -379,6 +392,7 @@ public class MainActivity extends SherlockFragmentActivity
 			else if(showmenu== false){
 				showmenu=true;
 				menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+				displayingArticle = false;
 				super.onBackPressed();
 			}
 		}
@@ -399,6 +413,7 @@ public class MainActivity extends SherlockFragmentActivity
 		else if(showmenu== false){
 				showmenu=true;
 				menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+				displayingArticle = false;
 				super.onBackPressed();
 		}
 		// otherwise, just go back. 
@@ -445,7 +460,8 @@ public class MainActivity extends SherlockFragmentActivity
 		  savedInstanceState.putString(STORED_SEMESTER, semester);
 		  savedInstanceState.putInt(STORED_SORT, sortID);
 		  savedInstanceState.putInt(STORED_POSITION, displayedArticle);
-		  
+		  savedInstanceState.putBoolean(DISPLAYING_ARTICLE, displayingArticle);
+		  	  
 	      // Always call the superclass so it can save the view hierarchy state
 		  super.onSaveInstanceState(savedInstanceState);
 	        }
@@ -458,17 +474,34 @@ public class MainActivity extends SherlockFragmentActivity
 	    	 semester = savedInstanceState.getString(STORED_SEMESTER);
 	    	 sortID = savedInstanceState.getInt(STORED_SORT);
 	    	 displayedArticle =savedInstanceState.getInt(STORED_POSITION);
+	    	 displayingArticle = savedInstanceState.getBoolean(DISPLAYING_ARTICLE);
 	    	 createMaster();
 	    	 sortData();
 	    	 
 	       	 if(smallLayout == false){
 	    		 displayArticleData(displayedArticle);
 	    	 }
+	       	 else if(displayingArticle == true){
+	       		displayArticleData(displayedArticle);
+	       	 }
 	    	 
 	    }
 	    
-		
-	/*
+	
+	  public void onPause() {
+		    super.onPause(); 
+		    saveFinalAttended();
+		    
+		    // add saving the string here. 
+		    SharedPreferences settings = getPreferences(MODE_PRIVATE);
+		    SharedPreferences.Editor editor = settings.edit();
+		    editor.putString("AttendedConvos", storedAttendance);
+		    
+		    editor.commit();
+	  }
+	  
+	  
+	/**
 	 * used to save the attendance to a string. 	
 	 */
 	public void saveFinalAttended(){	
@@ -491,8 +524,15 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	/*
 	 * To Do:
-	 *  
-	 * Add a system preference string that can PERMEMENTALY store the convo data. 
+	
+		Implement a button to show the number of convos attended. 
+		Tweak the layout (size of text ,location, spacing of menus and text). 
+		Add a blank article layout/image instead of the temporary article.
+		Add more comments to the code.  
+		We would like to add a Berea College theme. 
+
+	 * 
+	 * 
 	 * 
 	 * We need to set a theme, tweaking layout. 
 	 * Implement change themese button. ?   

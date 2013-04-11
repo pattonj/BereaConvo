@@ -13,28 +13,26 @@
     android:paddingTop="10dp"
     android:paddingRight="10dp"
     android:orientation="horizontal"
-    android:gravity="left" >
+    android:gravity="right" >
     
     <TextView
         android:id="@+id/lvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
         android:layout_gravity="left"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:layout_weight=".5"/>
       
-	    <LinearLayout
-		android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	   	android:orientation="horizontal"
-	    android:gravity="right" >
+	
 	  
 	    <ImageView 
 	        android:id="@+id/lvCheckmark"
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_height="match_parent"
+	        android:paddingLeft="5dp"
 	       
         />
-    	</LinearLayout>
+    
   	 </LinearLayout>
     <LinearLayout 
       android:layout_width="match_parent"
