@@ -29,7 +29,8 @@ public class MenuFragment extends SherlockListFragment{
 	// list used in teh dapter. 
 	List<HashMap<String, Object>> convodata;
 	
-	
+	// used to check if there is data in the list. 
+	boolean hasData;
 	
 	
 	// MainActivity class must implement this interface so the frag can deliver the message/subroutine
@@ -68,13 +69,17 @@ public class MenuFragment extends SherlockListFragment{
 	    	// sets the action for long click. 
 	      @Override
 	      public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long id) {
-	       	   // currently makes a toast to say clicked, shoudl be chanced to marked.      
+	       	if(hasData = true){
+	       		// currently makes a toast to say clicked, shoudl be chanced to marked.      
 	    	  Toast.makeText(getActivity(),
-	            "Item in position " + position + " clicked",
-	            Toast.LENGTH_LONG).show();
+	            "Marked as attended",
+	            Toast.LENGTH_SHORT).show();
 	        // Return true to consume the click event. In this case the
 	        // onListItemClick listener is not called anymore.
-	        mainActivityCall.markConvo(position);
+	        
+	    	  mainActivityCall.markConvo(position);
+	       	}
+	       	
 	        return true;
 	      }
 	    });
@@ -120,6 +125,7 @@ public class MenuFragment extends SherlockListFragment{
 		 
 		 // maps the new convodata with the data it just recieved. 
 	        for(int i = 0; i < data.size(); i++){
+	        	hasData = true;
 	            HashMap<String, Object> map = new HashMap<String, Object>();
 	            map.put("title", data.get(i)[4]);
 	            map.put("date", data.get(i)[3]);
@@ -133,6 +139,16 @@ public class MenuFragment extends SherlockListFragment{
 	            convodata.add(map);
 	        }
 		 
+	        if(convodata.isEmpty()){
+	        	hasData = false;
+	        	HashMap<String, Object> map = new HashMap<String, Object>();
+	            map.put("title", "No convos found");
+	            map.put("date", "");
+	            map.put("time", "");
+	            map.put("checkmark", R.drawable.exclamation_mark);
+	            
+	            convodata.add(map);
+	        }
 	        // notified the list that the data has been updated. 
 			myList2.notifyDataSetChanged();
 		}

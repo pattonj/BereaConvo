@@ -18,29 +18,32 @@ import com.slidingmenu.lib.SlidingMenu;
 public class MainActivity extends SherlockFragmentActivity 
 		implements MenuFragment.onArticleSelected{
 	
-	//Master database
+	//Master "database"
 	public List<String[]> database;
 
-	// the storable version of attended convos. 
+	// String variable for attended convos. 
 	public String storedAttendance="";
 	static final String STORED_CONVOS ="storedConvos";
 	
-	// this declares the local variable. 
+	// String variable for the semester. 
 	public String semester = "Fall"; 
 	static final String STORED_SEMESTER ="storedSemester";
 	
 	
-	//needs to be a final string that keeps track of how to sort the data
+	//Integer that controls how the data is sorted. 
 	public int sortID = 0;
 	static final String STORED_SORT ="storedSort";
 	
-	//the article that is being displayed
+	//Integer for the article that is being displayed
 	public int displayedArticle=0;
 	static final String STORED_POSITION ="storedPosition";
+	
+	//Used to determine if an article is showing
+	// (Always shows article when rotating from large land to portrait). 
 	public boolean displayingArticle = false;
 	static final String DISPLAYING_ARTICLE ="DisplayingArticle";
 	
-	//the database to be displayed. 
+	//the "database" to be displayed. 
 	public List<String[]> dbDisplay;
 
 	// sets the sliding menu
@@ -52,7 +55,7 @@ public class MainActivity extends SherlockFragmentActivity
     public TextView eveningButton ;
     public TextView specialButton ;
     
-    //a variable to keep track of if the side menu/toggle should work. 
+    //a variable to keep track of if the side menu/toggle should work/show. 
     public boolean showmenu = true;
     
     
@@ -89,12 +92,12 @@ public class MainActivity extends SherlockFragmentActivity
 			// set content view
 			setContentView(R.layout.main_fragment_activity);
 			
-			// if we find the id for small layout
-			// note, this takes a second  to find. - maybe improve in the future.
+			// Look for the id for small layout
 		if(findViewById(R.id.article_frame_small)!= null){
 				// find article fragment
 				ArticleFragment articleFrag = (ArticleFragment) getSupportFragmentManager().findFragmentById(R.id.article_frame_small);
 				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+				// tell the program we are in the small layout. 
 				smallLayout = true;
 				//hide fragment and commit the change.  
 				ft.hide(articleFrag);
@@ -116,7 +119,7 @@ public class MainActivity extends SherlockFragmentActivity
 	        // This gets the current semester by month. 
 	        Calendar cal = Calendar.getInstance();
 	        int month = cal.get(Calendar.MONTH);
-	        
+	        // sets the semester variable depending on the month. 
 	        if(month > 5 ){
 	        	semester = "Fall";
 	        }
@@ -136,7 +139,7 @@ public class MainActivity extends SherlockFragmentActivity
 	         eveningButton = (TextView) menu.findViewById(R.id.EVENING);
 	         specialButton = (TextView) menu.findViewById(R.id.SPECIAL);
 	         
-	         // sets the side button actions. 
+	         // sets the side button action, which sorts the data.  
 	         allButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
 	            	sortDataClick(0);
@@ -194,26 +197,25 @@ public class MainActivity extends SherlockFragmentActivity
 		// checks to make sure we have data in the string before trying to add it. 
 		if(storedAttendance.equals("")){
 			
-			// if empty create zero's to merge with final array. 
+			// if empty create zero's to possibly merge with final array. 
 			int size = temp.size();
 			String storedAttendanceblank = "";
 			for(int i =0; i<size; i++){
 				storedAttendanceblank += "0";
 			}
 			
+			// look for the shared preference, if it exists load it, else load the blank string. 
+			// This could be made faster by making blank data a submethod. 
 			SharedPreferences settings = getPreferences(0);
 		    storedAttendance = settings.getString("AttendedConvos", storedAttendanceblank);
-		       
+		     
+		    
 		       
 		}
 		
-		// need an else if to access the stored preference data 
-			
-		
-		
+				
 		// this merges our data together
 		// Gets the character from the attended string, which requires no splitting since it's only 1,0. 
-		
 		for(int i=0;i <temp.size();i++){
 			database.add(new String[]{temp.get(i)[0],temp.get(i)[1],temp.get(i)[2],temp.get(i)[3],temp.get(i)[4],temp.get(i)[5],temp.get(i)[6],Character.toString(storedAttendance.charAt(i))});
 			
@@ -245,6 +247,7 @@ public class MainActivity extends SherlockFragmentActivity
 		
 		// overwrites the old display every time it runs. 
 		dbDisplay = new ArrayList<String[]>();
+		
 		
 		switch (sortID){
 		
@@ -374,7 +377,17 @@ public class MainActivity extends SherlockFragmentActivity
 			sortData();
 		     
 		}
+		
+		// counts the attendance in a display. 
+		
 		else if(item.getTitle().equals("Attendance")){
+			int fall = sortAttandance("Fall");
+			int spring = sortAttandance("Spring");
+			new AlertDialog.Builder(this)
+		    .setTitle("Attendance")
+		    .setMessage("You have attended \n Fall:"+ fall+"\n Spring:"+spring)
+		     .show();
+					
 			
 		}
 		else if(item.getTitle().equals("About")){
@@ -387,9 +400,12 @@ public class MainActivity extends SherlockFragmentActivity
 		// this is what happens if you press the home button. 
 		else if(item.getItemId()==android.R.id.home){
 			if(showmenu == true){
-			menu.showMenu();
+				// if the side menu is open, close it. 
+				menu.showMenu();
 			}
 			else if(showmenu== false){
+				// if we are showing an article (showmenu= false)
+				// Enable the menu and set the display on rotate to false. 
 				showmenu=true;
 				menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 				displayingArticle = false;
@@ -413,6 +429,7 @@ public class MainActivity extends SherlockFragmentActivity
 		else if(showmenu== false){
 				showmenu=true;
 				menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+				// Don't show the article if rotated. 
 				displayingArticle = false;
 				super.onBackPressed();
 		}
@@ -429,8 +446,10 @@ public class MainActivity extends SherlockFragmentActivity
 			
 		// Adding the ID to the list.
 		for(int i =0; i<database.size();i++){
+			// look to see if the ID from dbDisplay and the database is the same. 
 			String ID = database.get(i)[0];
 			if(convoID == ID ){
+				// if they match, switch whatever it is. 
 				if(database.get(i)[7].equals("0")){
 					database.get(i)[7] = "1";
 					
@@ -451,6 +470,18 @@ public class MainActivity extends SherlockFragmentActivity
 		}			
 	}
 	
+	public int sortAttandance(String sem){
+		// set the count at 0
+		int count= 0;
+		// Find all the attendance positions that are 1 and the semester that was passed. 
+		for(int i = 0; i< database.size(); i++){
+			if((database.get(i)[1].equals(sem))&&(database.get(i)[7].equals("1"))){
+			count++;
+			}
+		}
+		// return the total count. 
+		return count;
+	}
 	
 	// when it needs to save the state, it does the following. 
 	  @Override
@@ -492,7 +523,7 @@ public class MainActivity extends SherlockFragmentActivity
 		    super.onPause(); 
 		    saveFinalAttended();
 		    
-		    // add saving the string here. 
+		    // This saves the attendance count. 
 		    SharedPreferences settings = getPreferences(MODE_PRIVATE);
 		    SharedPreferences.Editor editor = settings.edit();
 		    editor.putString("AttendedConvos", storedAttendance);
@@ -518,26 +549,19 @@ public class MainActivity extends SherlockFragmentActivity
 			
 		
 		
-		
 	}
 	
 	
 	/*
-	 * To Do:
-	
-		Implement a button to show the number of convos attended. 
-		Tweak the layout (size of text ,location, spacing of menus and text). 
-		Add a blank article layout/image instead of the temporary article.
-		Add more comments to the code.  
-		We would like to add a Berea College theme. 
-
-	 * 
-	 * 
-	 * 
-	 * We need to set a theme, tweaking layout. 
-	 * Implement change themese button. ?   
-	 * 
-		 * 
-	 */
+	* To Do:
+	*
+	*	Implement a button to show the number of convos attended. (Added, though NOT tested).  
+	*	Tweak the layout (size of text ,location, spacing of menus and text). 
+	*	Add a blank article layout/image instead of the temporary article.
+	*	
+	*	We would like to add a Berea College theme. 
+	*	Add a change themes button. 
+	*
+	*/
 	
 }

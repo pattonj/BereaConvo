@@ -11,6 +11,11 @@ public class DataStored {
 	
 	public List<String[]> createdata(){
 		//[ID,semester, date,time, title,speaker,description,attended]
+		
+		//ID = Should be a different number for each one!
+		//semester = needs to be "Fall" or "Spring" (capital F and S).
+		// Attended - NOT included in this list. Later would be important for a database. 
+		
 		 database = new ArrayList<String[]>();
 		 		// Fall 2012 convos
 				database.add(new String[]{"1","Fall","08/30/12","3:00pm","Why Berea?" ,"Speaker: Dr. Lyle Roelofs","President Roelofs, Berea’s Ninth President, opens the new academic year as he shares hisideas about Berea College in the past and in the 21st Century. Welcome to our new President!."});
@@ -39,22 +44,13 @@ public class DataStored {
 				database.add(new String[]{"22","Spring","04/04/13","3:00pm","Tell the Truth but Tell it Slant: The Past as Present in Appalachia.","Speaker: Ron Rash","The Parris Distinguished Professor of Appalachian Cultural Studies at Western Carolina University, Ron Rash has published 5 novels, 5 short story collections and 4 books of poetry. In his poetry and stories of loss and redemption, his love of family and a strong sense of place are evident. Co-sponsored with the LJAC. Appalachian Lecture."});
 				database.add(new String[]{"23","Spring","04/11/13","8:00pm","“Who Could Ask for Anything More?”–An All Gershwin Revue. ","Perfomer:Spectrum Brass","Committed to creative collaboration, Spectrum Brass adds musical layers of piano, percussion,and vocals to their stunning brass arrangements. The audience will be transported to the clubsof NYC in the 1920s and 30s with their engaging and energetic arrangements of Gershwin’s music. A Stephenson Memorial Concert."});
 				database.add(new String[]{"24","Spring","04/18/13","3:00pm","Frays in the Social Fabric, Rents in the Commonweal: A Sewing Kit","Speaker: Beverly May","Beverly May is a true Appalachian hero. From her home in Eastern Kentucky on land her family has inhabited for generations, she has successfully fought mountaintop removal mining, started an old-time music school, served as a nurse practitioner, and led the local food movement. Co sponsored with CCC, the LJAC, and the Center for Excellence in Learning through Service (CELTS). Service Convocation"});
-				//database.add(new String[]{"","Spring","/2/14","8:00pm","Spring Convo ","speaker","This is a description of the data that will be used"});
-				
-				
-				
-				
-				
-				
-				
-				
-				
+														
+								
 				// Special convos Fall 2012 and Spring 2013
 				//database.add(new String[]{"","Fall","/2/13","6:00pm","fall convo ","speaker","This is a description of the data that will be used"});
 				//database.add(new String[]{"","Spring","/2/14","6:00pm","spring convo ","speaker","This is a description of the data that will be used"});
 			
-			
-			
+						
 			return database;
 	}
 	

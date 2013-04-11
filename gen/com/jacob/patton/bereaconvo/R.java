@@ -1040,12 +1040,13 @@ containing a value of this type.
         public static final int all_convos=0x7f020070;
         public static final int bc_icon=0x7f020071;
         public static final int evening_convos=0x7f020072;
-        public static final int green_checkmark=0x7f020073;
-        public static final int indicator=0x7f020074;
-        public static final int new_indicator=0x7f020075;
-        public static final int shadow=0x7f020076;
-        public static final int shadow_checkmark=0x7f020077;
-        public static final int special_convos=0x7f020078;
+        public static final int exclamation_mark=0x7f020073;
+        public static final int green_checkmark=0x7f020074;
+        public static final int indicator=0x7f020075;
+        public static final int new_indicator=0x7f020076;
+        public static final int shadow=0x7f020077;
+        public static final int shadow_checkmark=0x7f020078;
+        public static final int special_convos=0x7f020079;
     }
     public static final class id {
         public static final int AFTERNOON=0x7f040046;
