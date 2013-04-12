@@ -385,7 +385,7 @@ public class MainActivity extends SherlockFragmentActivity
 			int spring = sortAttandance("Spring");
 			new AlertDialog.Builder(this)
 		    .setTitle("Attendance")
-		    .setMessage("You have attended \n Fall:"+ fall+"\n Spring:"+spring)
+		    .setMessage("You have attended\n \nFall convos: "+ fall+"\nSpring Convos: "+spring + "\n\n\n *This is NOT an official way to record convos. Convo cards are still required to be turned in. \n Please see MyBerea for an official list of your convos.")
 		     .show();
 					
 			

@@ -69,7 +69,7 @@ public class MenuFragment extends SherlockListFragment{
 	    	// sets the action for long click. 
 	      @Override
 	      public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long id) {
-	       	if(hasData = true){
+	       	if(hasData == true){
 	       		// currently makes a toast to say clicked, shoudl be chanced to marked.      
 	    	  Toast.makeText(getActivity(),
 	            "Marked as attended",
@@ -112,9 +112,10 @@ public class MenuFragment extends SherlockListFragment{
 
 	public void onListItemClick(ListView l, View v, int position, long id) {
 	  // on click, whichever title you selected, it passes the position to the main activity which passes the correct array. 
-	
-	mainActivityCall.displayArticleData(position);
+		if(hasData == true){
+			mainActivityCall.displayArticleData(position);
 		}
+	}
 
 
 	
@@ -148,6 +149,7 @@ public class MenuFragment extends SherlockListFragment{
 	            map.put("checkmark", R.drawable.exclamation_mark);
 	            
 	            convodata.add(map);
+	            
 	        }
 	        // notified the list that the data has been updated. 
 			myList2.notifyDataSetChanged();
