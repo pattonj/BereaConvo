@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -20,6 +21,7 @@ public class ArticleFragment extends SherlockFragment{
 	TextView convoDescription;
 	TextView convoSpeaker;
 	String[] toDisplay;
+	ImageView logo;
 	
 	
 	
@@ -37,7 +39,29 @@ public class ArticleFragment extends SherlockFragment{
 	 * @param data - Array with Data. 
 	 */
 
+	public void showBlankArticle(){
+		convoTitle = (TextView) getView().findViewById(R.id.ConvoTitle);
+		convoTitle.setText("");
+		
+		// find and set convo data
+		convoDate = (TextView) getView().findViewById(R.id.ConvoDate);
+			convoDate.setText("");
+			
+		// find and set convo time. 	
+		convoTime = (TextView) getView().findViewById(R.id.ConvoTime);
+			convoTime.setText("");
+
+		// find and set convo speaker. 	
+		convoSpeaker = (TextView) getView().findViewById(R.id.ConvoSpeaker);
+			convoSpeaker.setText("");		
+			
+		// find and set description. 	
+		convoDescription = (TextView) getView().findViewById(R.id.ConvoDescription);
+			convoDescription.setText("");
+		logo = (ImageView) getView().findViewById(R.id.BereLogo);	
+			logo.setVisibility(View.VISIBLE);
 	
+	}
 	
 	public void updateArticle(String[] data){
 	
@@ -62,6 +86,9 @@ public class ArticleFragment extends SherlockFragment{
 		// find and set description. 	
 		convoDescription = (TextView) getView().findViewById(R.id.ConvoDescription);
 			convoDescription.setText(data[6]);
+			
+		logo = (ImageView) getView().findViewById(R.id.BereLogo);	
+			logo.setVisibility(View.GONE);
 	}
 	
 }

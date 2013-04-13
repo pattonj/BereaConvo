@@ -58,6 +58,9 @@ public class MainActivity extends SherlockFragmentActivity
     //a variable to keep track of if the side menu/toggle should work/show. 
     public boolean showmenu = true;
     
+    // a variable to decide if it should update due to pressing a side button. 
+    public boolean sideMenu = false;
+    
     
     //a variable to keep track of if we are in small or large mode. 
     public boolean smallLayout = false;
@@ -92,6 +95,8 @@ public class MainActivity extends SherlockFragmentActivity
 			// set content view
 			setContentView(R.layout.main_fragment_activity);
 			
+			
+			
 			// Look for the id for small layout
 		if(findViewById(R.id.article_frame_small)!= null){
 				// find article fragment
@@ -104,6 +109,8 @@ public class MainActivity extends SherlockFragmentActivity
 				ft.commit(); 
 				
 		}
+		
+		
 			
 	        // configure the SlidingMenu
 			menu = new SlidingMenu(this);
@@ -132,7 +139,11 @@ public class MainActivity extends SherlockFragmentActivity
 	        createMaster();
 		     //sorts the data. 
 		     sortData();
-		       
+		
+		     if(!smallLayout){
+		    	 displayBlankArticleData();
+		     }
+		     
 	        // creates the side buttons. 
 	         allButton = (TextView) menu.findViewById(R.id.ALL);
 		     afternoonButton = (TextView) menu.findViewById(R.id.AFTERNOON);
@@ -143,6 +154,7 @@ public class MainActivity extends SherlockFragmentActivity
 	         allButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
 	            	sortDataClick(0);
+	            	sideMenu = true;
 	             }
 	         });
 	        
@@ -151,13 +163,14 @@ public class MainActivity extends SherlockFragmentActivity
 	         afternoonButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
 	            	sortDataClick(1);
+	            	sideMenu = true;
 	             }
 	         });
 	         
 	         eveningButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
 	            	sortDataClick(2);;
-	            	 
+	            	sideMenu = true; 
 	            	 
 	             }
 	         });
@@ -165,6 +178,7 @@ public class MainActivity extends SherlockFragmentActivity
 	         specialButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
 	                sortDataClick(3);
+	                sideMenu = true;
 	            }
 	         });
 	         
@@ -310,6 +324,13 @@ public class MainActivity extends SherlockFragmentActivity
 			MenuFragment menuFrag = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_frame);
 			// pass the position from the selected menu to the article.  
 			menuFrag.updateMenu(dbDisplay);
+			if(!dbDisplay.isEmpty()&&(sideMenu == true)){
+			displayArticleData(0);
+			sideMenu = false;
+			}
+			else{
+				displayBlankArticleData();
+			}
 		}
 	}
 	
@@ -325,8 +346,10 @@ public class MainActivity extends SherlockFragmentActivity
 		displayedArticle = position;
 		displayingArticle = true;
 		
+		
 		// look to see if we are in small mode. 
 		if(smallLayout == true){
+			
 			// if so find both of the fragments and start transaction. 
 			ArticleFragment articleFrag = (ArticleFragment) getSupportFragmentManager().findFragmentById(R.id.article_frame_small);
 			MenuFragment menuFrag = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_frame_small);
@@ -357,7 +380,11 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 	}
 	
-	
+	public void displayBlankArticleData(){
+		ArticleFragment articleFrag = (ArticleFragment) getSupportFragmentManager().findFragmentById(R.id.article_frame);
+		// pass the position from the selected menu to the article. 
+		articleFrag.showBlankArticle();
+	}
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
@@ -509,10 +536,10 @@ public class MainActivity extends SherlockFragmentActivity
 	    	 createMaster();
 	    	 sortData();
 	    	 
-	       	 if(smallLayout == false){
+	    	 if((smallLayout == false)&&(!dbDisplay.isEmpty())){
 	    		 displayArticleData(displayedArticle);
 	    	 }
-	       	 else if(displayingArticle == true){
+	       	 else if((displayingArticle == true)&&(!dbDisplay.isEmpty())){
 	       		displayArticleData(displayedArticle);
 	       	 }
 	    	 
@@ -555,12 +582,12 @@ public class MainActivity extends SherlockFragmentActivity
 	/*
 	* To Do:
 	*
-	*	Implement a button to show the number of convos attended. (Added, though NOT tested).  
 	*	Tweak the layout (size of text ,location, spacing of menus and text). 
-	*	Add a blank article layout/image instead of the temporary article.
 	*	
 	*	We would like to add a Berea College theme. 
 	*	Add a change themes button. 
+	*
+	*	Add an actual about activity. 
 	*
 	*/
 	
