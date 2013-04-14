@@ -58,9 +58,9 @@ public class MainActivity extends SherlockFragmentActivity
     //a variable to keep track of if the side menu/toggle should work/show. 
     public boolean showmenu = true;
     
-    // a variable to decide if it should update due to pressing a side button. 
-    public boolean sideMenu = false;
-    
+    // a variable to decide if it should update due to pressing a  button. 
+    public boolean menuButtonPressed = false;
+    public boolean longPressed = false;
     
     //a variable to keep track of if we are in small or large mode. 
     public boolean smallLayout = false;
@@ -153,8 +153,9 @@ public class MainActivity extends SherlockFragmentActivity
 	         // sets the side button action, which sorts the data.  
 	         allButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
-	            	sortDataClick(0);
-	            	sideMenu = true;
+	            	 menuButtonPressed = true;
+	            	 sortDataClick(0);
+	            	
 	             }
 	         });
 	        
@@ -162,23 +163,26 @@ public class MainActivity extends SherlockFragmentActivity
 	         
 	         afternoonButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
-	            	sortDataClick(1);
-	            	sideMenu = true;
+	            	 menuButtonPressed = true;
+	            	 sortDataClick(1);
+	            	
 	             }
 	         });
 	         
 	         eveningButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
-	            	sortDataClick(2);;
-	            	sideMenu = true; 
+	            	 menuButtonPressed = true;
+	            	 sortDataClick(2);
+	            	
 	            	 
 	             }
 	         });
 	         
 	         specialButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
-	                sortDataClick(3);
-	                sideMenu = true;
+	            	 menuButtonPressed = true;
+	            	 sortDataClick(3);
+	                
 	            }
 	         });
 	         
@@ -318,15 +322,21 @@ public class MainActivity extends SherlockFragmentActivity
 			// get the menu frame and pass the data. 
 			MenuFragment menuFrag = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_frame_small);
 			menuFrag.updateMenu(dbDisplay);
+			// needed as to keep what it displays straight. 
+			menuButtonPressed = false;
 		}
 		else{
 			// this find the ArticleFragment frame and give it a variable name. 
 			MenuFragment menuFrag = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_frame);
 			// pass the position from the selected menu to the article.  
 			menuFrag.updateMenu(dbDisplay);
-			if(!dbDisplay.isEmpty()&&(sideMenu == true)){
-			displayArticleData(0);
-			sideMenu = false;
+			if((!dbDisplay.isEmpty())&&(menuButtonPressed == true)){
+				displayArticleData(0);
+				menuButtonPressed = false;
+			}
+			else if(longPressed == true){
+				// this is needed so that it doesn't display a blank article or show the first article. 
+				longPressed = false;
 			}
 			else{
 				displayBlankArticleData();
@@ -487,6 +497,7 @@ public class MainActivity extends SherlockFragmentActivity
 		 		}
 				
 				// This is needed to update the checkmarks. 
+				longPressed = true;
 				sortData();
 				
 				// ends the for statement to save time. 
