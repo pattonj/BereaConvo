@@ -26,7 +26,7 @@ public class MenuFragment extends SherlockListFragment{
 	 
 	// creates adapter for listview. 
 	SimpleAdapter myList2;
-	// list used in teh dapter. 
+	// list used in the adpter. 
 	List<HashMap<String, Object>> convodata;
 	
 	// used to check if there is data in the list. 
@@ -74,12 +74,12 @@ public class MenuFragment extends SherlockListFragment{
 	    	  Toast.makeText(getActivity(),
 	            "Marked as attended",
 	            Toast.LENGTH_SHORT).show();
-	        // Return true to consume the click event. In this case the
-	        // onListItemClick listener is not called anymore.
 	        
+	    	  //runs the mark convo routine in the main activity. 
 	    	  mainActivityCall.markConvo(position);
 	       	}
-	       	
+	       	// Return true to consume the click event. In this case the
+	        // onListItemClick listener is not called anymore.
 	        return true;
 	      }
 	    });
@@ -127,10 +127,13 @@ public class MenuFragment extends SherlockListFragment{
 		 // maps the new convodata with the data it just recieved. 
 	        for(int i = 0; i < data.size(); i++){
 	        	hasData = true;
+	        	// This needs to be inside the for loop to create a new map every time otherwise it would replace the old values. 
 	            HashMap<String, Object> map = new HashMap<String, Object>();
+	            //put the values. 
 	            map.put("title", data.get(i)[4]);
 	            map.put("date", data.get(i)[3]);
 	            map.put("time", data.get(i)[2]);
+	            //switches depending on attended or not. 
 	            if(data.get(i)[7].equals("0")){
 	            	map.put("checkmark", R.drawable.shadow_checkmark);
 	            }
@@ -139,7 +142,7 @@ public class MenuFragment extends SherlockListFragment{
 	            }
 	            convodata.add(map);
 	        }
-		 
+	        // if the data is empty,display no data found. 
 	        if(convodata.isEmpty()){
 	        	hasData = false;
 	        	HashMap<String, Object> map = new HashMap<String, Object>();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -19,70 +20,73 @@ public class MainActivity extends SherlockFragmentActivity
 		implements MenuFragment.onArticleSelected{
 	
 	//Master "database"
-	public List<String[]> database;
+	private List<String[]> database;
 
 	// String variable for attended convos. 
-	public String storedAttendance="";
-	static final String STORED_CONVOS ="storedConvos";
+	private String storedAttendance="";
+	private static final String STORED_CONVOS ="storedConvos";
 	
 	// String variable for the semester. 
-	public String semester = "Fall"; 
-	static final String STORED_SEMESTER ="storedSemester";
+	private String semester = "Fall"; 
+	private static final String STORED_SEMESTER ="storedSemester";
 	
 	
 	//Integer that controls how the data is sorted. 
-	public int sortID = 0;
-	static final String STORED_SORT ="storedSort";
+	private int sortID = 0;
+	private static final String STORED_SORT ="storedSort";
 	
 	//Integer for the article that is being displayed
-	public int displayedArticle=0;
-	static final String STORED_POSITION ="storedPosition";
+	private int displayedArticle=0;
+	private static final String STORED_POSITION ="storedPosition";
 	
 	//Used to determine if an article is showing
 	// (Always shows article when rotating from large land to portrait). 
-	public boolean displayingArticle = false;
+	private  boolean displayingArticle = false;
 	static final String DISPLAYING_ARTICLE ="DisplayingArticle";
 	
 	//the "database" to be displayed. 
-	public List<String[]> dbDisplay;
+	private List<String[]> dbDisplay;
 
 	// sets the sliding menu
-	public SlidingMenu menu;
+	private SlidingMenu menu;
 	
 	//sets the text/button variable for the side buttons. 
-	public TextView allButton ;
-    public TextView afternoonButton;
-    public TextView eveningButton ;
-    public TextView specialButton ;
+	private TextView allButton ;
+    private TextView afternoonButton;
+    private TextView eveningButton ;
+    private TextView specialButton ;
     
     //a variable to keep track of if the side menu/toggle should work/show. 
-    public boolean showmenu = true;
+    private boolean showmenu = true;
     
     // a variable to decide if it should update due to pressing a  button. 
-    public boolean menuButtonPressed = false;
-    public boolean longPressed = false;
+    private boolean menuButtonPressed = false;
+    private boolean longPressed = false;
     
     //a variable to keep track of if we are in small or large mode. 
-    public boolean smallLayout = false;
+    private boolean smallLayout = false;
     
 	// creates menus. 
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		//This enables the back/up arrow in the top left corner, which lets the user know there is a menu. 
-		// The display arrow drawable is set via style. (See the slidingmenu list for an example.) 
+		// The display arrow drawable cane be set via style. (See the slidingmenu list for an example.) 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		
-		//sets the semester button. 
+		//sets the menu buttons. 
 		menu.add(semester)
         	.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
         
         
-        menu.add("Attendance")
+		menu.add("About")
+    	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+		
+		menu.add("Attendance")
         	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         
-        menu.add("About")
-        	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+        menu.add("Free Prizes")
+    	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         
         return true;
     }
@@ -139,7 +143,8 @@ public class MainActivity extends SherlockFragmentActivity
 	        createMaster();
 		     //sorts the data. 
 		     sortData();
-		
+
+		     // if we are in landscape/large layout, show a blank article. 
 		     if(!smallLayout){
 		    	 displayBlankArticleData();
 		     }
@@ -153,7 +158,9 @@ public class MainActivity extends SherlockFragmentActivity
 	         // sets the side button action, which sorts the data.  
 	         allButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
+	            	 // tell it that we did press the button, and to sort the menu. 
 	            	 menuButtonPressed = true;
+	            	 // Passes the variable on how to sort the data. 
 	            	 sortDataClick(0);
 	            	
 	             }
@@ -185,11 +192,6 @@ public class MainActivity extends SherlockFragmentActivity
 	                
 	            }
 	         });
-	         
-	        
-	        
-	        
-
 	              
 	    }	
 
@@ -212,7 +214,7 @@ public class MainActivity extends SherlockFragmentActivity
 		// creates our new database
 		database = new ArrayList<String[]>();
 		
-		// checks to make sure we have data in the string before trying to add it. 
+		// checks to make sure we have attendance data in the string before trying to add it. 
 		if(storedAttendance.equals("")){
 			
 			// if empty create zero's to possibly merge with final array. 
@@ -260,10 +262,10 @@ public class MainActivity extends SherlockFragmentActivity
 	 *0=all, 1=afternoon, 2=evening, 3=special
 	 *
 	 */	
-	public void sortData(){
+	private void sortData(){
 		
 		
-		// overwrites the old display every time it runs. 
+		// overwrites the old display list every time it runs. 
 		dbDisplay = new ArrayList<String[]>();
 		
 		
@@ -330,6 +332,7 @@ public class MainActivity extends SherlockFragmentActivity
 			MenuFragment menuFrag = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_frame);
 			// pass the position from the selected menu to the article.  
 			menuFrag.updateMenu(dbDisplay);
+			//if the data is not empty and it's updating due to a menu press, show the first article. 
 			if((!dbDisplay.isEmpty())&&(menuButtonPressed == true)){
 				displayArticleData(0);
 				menuButtonPressed = false;
@@ -339,6 +342,7 @@ public class MainActivity extends SherlockFragmentActivity
 				longPressed = false;
 			}
 			else{
+				// all other cases exhausted, show the blank article. 
 				displayBlankArticleData();
 			}
 		}
@@ -390,9 +394,9 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 	}
 	
-	public void displayBlankArticleData(){
+	private void displayBlankArticleData(){
 		ArticleFragment articleFrag = (ArticleFragment) getSupportFragmentManager().findFragmentById(R.id.article_frame);
-		// pass the position from the selected menu to the article. 
+		// tells it to show blank article. 
 		articleFrag.showBlankArticle();
 	}
 	
@@ -422,16 +426,20 @@ public class MainActivity extends SherlockFragmentActivity
 			int spring = sortAttandance("Spring");
 			new AlertDialog.Builder(this)
 		    .setTitle("Attendance")
-		    .setMessage("You have attended\n \nFall convos: "+ fall+"\nSpring Convos: "+spring + "\n\n\n *This is NOT an official way to record convos. Convo cards are still required to be turned in. \n Please see MyBerea for an official list of your convos.")
+		    .setMessage("You have attended\n \nFall convos: "+ fall+"\nSpring Convos: "+spring + "\n\n\n*This is NOT an official way to record convos. Convo cards are still required to be turned in. \nPlease see MyBerea for an official list of your convos.")
 		     .show();
 					
 			
 		}
 		else if(item.getTitle().equals("About")){
-			new AlertDialog.Builder(this)
-		    .setTitle("About")
-		    .setMessage(R.string.about)
-		     .show();
+			//starts the about intent. 	
+			Intent intent = new Intent(this, About.class);
+			startActivity(intent);
+		}
+		else if(item.getTitle().equals("Free Prizes")){
+			// starts the swagbucks/advertising intent. 
+			Intent intent = new Intent(this, SwagActivity.class);
+			startActivity(intent);
 		}
 		
 		// this is what happens if you press the home button. 
@@ -498,9 +506,10 @@ public class MainActivity extends SherlockFragmentActivity
 				
 				// This is needed to update the checkmarks. 
 				longPressed = true;
+				//update the menu. 
 				sortData();
 				
-				// ends the for statement to save time. 
+				// ends the for statement once found to save resources. 
 				return;
 			
 			}
@@ -508,7 +517,7 @@ public class MainActivity extends SherlockFragmentActivity
 		}			
 	}
 	
-	public int sortAttandance(String sem){
+	private int sortAttandance(String sem){
 		// set the count at 0
 		int count= 0;
 		// Find all the attendance positions that are 1 and the semester that was passed. 
@@ -521,10 +530,12 @@ public class MainActivity extends SherlockFragmentActivity
 		return count;
 	}
 	
-	// when it needs to save the state, it does the following. 
+	// when it needs to save the state (rotating, pausing, etc), it does the following. 
 	  @Override
 	public void onSaveInstanceState(Bundle savedInstanceState){
+		  // puts final attendance in a string and saves.  
 		  saveFinalAttended();
+		  //saved the different variables to temporary storage. 
 		  savedInstanceState.putString(STORED_CONVOS, storedAttendance);
 		  savedInstanceState.putString(STORED_SEMESTER, semester);
 		  savedInstanceState.putInt(STORED_SORT, sortID);
@@ -539,6 +550,7 @@ public class MainActivity extends SherlockFragmentActivity
 	  // when it is recreated it does the following. 
 	  public void onRestoreInstanceState(Bundle savedInstanceState) {
 	    	 super.onRestoreInstanceState(savedInstanceState);
+	    	 // restores the different variables. 
 	    	 storedAttendance = savedInstanceState.getString(STORED_CONVOS);
 	    	 semester = savedInstanceState.getString(STORED_SEMESTER);
 	    	 sortID = savedInstanceState.getInt(STORED_SORT);
@@ -546,10 +558,11 @@ public class MainActivity extends SherlockFragmentActivity
 	    	 displayingArticle = savedInstanceState.getBoolean(DISPLAYING_ARTICLE);
 	    	 createMaster();
 	    	 sortData();
-	    	 
+	    	 // if we are in large/landscape, show the aritcle. 
 	    	 if((smallLayout == false)&&(!dbDisplay.isEmpty())){
 	    		 displayArticleData(displayedArticle);
 	    	 }
+	    	 // else, if we were displaying and article, show it again. 
 	       	 else if((displayingArticle == true)&&(!dbDisplay.isEmpty())){
 	       		displayArticleData(displayedArticle);
 	       	 }
@@ -573,33 +586,33 @@ public class MainActivity extends SherlockFragmentActivity
 	/**
 	 * used to save the attendance to a string. 	
 	 */
-	public void saveFinalAttended(){	
+	private void saveFinalAttended(){	
 		
 		//adding to the string for saving.
 		// Start with blank string
 		storedAttendance = "";
-		// loop through adding the id to the string
+		// loop through adding the 1 or 0 to the string
 		
 		for(int i=0;i< database.size();i++){
 			storedAttendance+=database.get(i)[7] ;
 		}
 		
-			
-		
-		
 	}
 	
 	
 	/*
-	* To Do:
+	* To Do in the future:
 	*
 	*	Tweak the layout (size of text ,location, spacing of menus and text). 
+	*	It looks ok,but could probably be optimized to look better with longer convos and such on different devices.  
 	*	
 	*	We would like to add a Berea College theme. 
 	*	Add a change themes button. 
-	*
-	*	Add an actual about activity. 
-	*
+	*	
+	*	add a database (parse?),xml, or some way to store data locally instead of in a list. 
+	*	This would allow updating the info instead of the entire app. 
+	*	Currently with the seperate DataStored class as long as it spits out a list, you could implement a database easily. 
+	*	Though it would change how the attended convos are stored. 
 	*/
 	
 }

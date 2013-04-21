@@ -14,14 +14,13 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 public class ArticleFragment extends SherlockFragment{
 	
-	// Setting Variable names. 
-	TextView convoTitle;
-	TextView convoDate;
-	TextView convoTime;
-	TextView convoDescription;
-	TextView convoSpeaker;
-	String[] toDisplay;
-	ImageView logo;
+	// Setting Variable names for displaying the article. 
+	private TextView convoTitle;
+	private TextView convoDate;
+	private TextView convoTime;
+	private TextView convoDescription;
+	private TextView convoSpeaker;
+	private ImageView logo;
 	
 	
 	
@@ -40,24 +39,26 @@ public class ArticleFragment extends SherlockFragment{
 	 */
 
 	public void showBlankArticle(){
+		// find and set blank convo title
 		convoTitle = (TextView) getView().findViewById(R.id.ConvoTitle);
 		convoTitle.setText("");
 		
-		// find and set convo data
+		// find and set blank convo data
 		convoDate = (TextView) getView().findViewById(R.id.ConvoDate);
 			convoDate.setText("");
 			
-		// find and set convo time. 	
+		// find and set blank convo time. 	
 		convoTime = (TextView) getView().findViewById(R.id.ConvoTime);
 			convoTime.setText("");
 
-		// find and set convo speaker. 	
+		// find and set blank convo speaker. 	
 		convoSpeaker = (TextView) getView().findViewById(R.id.ConvoSpeaker);
 			convoSpeaker.setText("");		
 			
-		// find and set description. 	
+		// find and set blank description. 	
 		convoDescription = (TextView) getView().findViewById(R.id.ConvoDescription);
 			convoDescription.setText("");
+		// show the berea logo. 	
 		logo = (ImageView) getView().findViewById(R.id.BereLogo);	
 			logo.setVisibility(View.VISIBLE);
 	
@@ -65,7 +66,7 @@ public class ArticleFragment extends SherlockFragment{
 	
 	public void updateArticle(String[] data){
 	
-		// [ID,semester,date,time,title,description] - setup of array.
+		// [ID,semester,date,time,title,speaker,description,attended] - setup of array.
 		
 		// find and set convo title text
 		convoTitle = (TextView) getView().findViewById(R.id.ConvoTitle);
@@ -87,6 +88,7 @@ public class ArticleFragment extends SherlockFragment{
 		convoDescription = (TextView) getView().findViewById(R.id.ConvoDescription);
 			convoDescription.setText(data[6]);
 			
+		// hides the berea logo. 	
 		logo = (ImageView) getView().findViewById(R.id.BereLogo);	
 			logo.setVisibility(View.GONE);
 	}

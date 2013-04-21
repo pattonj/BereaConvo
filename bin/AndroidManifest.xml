@@ -22,6 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.jacob.patton.bereaconvo.About"
+            android:label="@string/title_activity_about" >
+        </activity>
+        <activity
+            android:name="com.jacob.patton.bereaconvo.SwagActivity"
+            android:label="@string/title_activity_swag" >
+        </activity>
     </application>
 
 </manifest>

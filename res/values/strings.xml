@@ -6,15 +6,48 @@
     <string name="action_settings">Settings</string>
     <string name="side_text">Convocation Name</string>
     <string name="main_text">This is the main text to show convocation information to the user</string>
-    <string name ="all_button">All</string>
-    <string name ="afternoon_button">Afternoon</string>
-	<string name ="evening_button">Evening</string>
-	<string name ="special_button">Special</string>
-	
-	<string name ="convo_title">Title</string>
-	<string name ="convo_date">1/2/34</string>
-	<string name ="convo_time">3:00pm - 4:00pm</string>
-	<string name="convo_description">This is the main text to show convocation information to the use.</string>
-	<string name="sliding_info">Convo Times</string>
-	<string name="about"> "\nThis app was created by Jacob Patton and Abraham Kali as part of the Advanded Android App class at Berea College. \n"</string>
+    <string name="all_button">All</string>
+    <string name="afternoon_button">Afternoon</string>
+    <string name="evening_button">Evening</string>
+    <string name="special_button">Special</string>
+    <string name="convo_title">Title</string>
+    <string name="convo_date">1/2/34</string>
+    <string name="convo_time">3:00pm - 4:00pm</string>
+    <string name="convo_description">This is the main text to show convocation information to the use.</string>
+    <string name="sliding_info">Convo Times</string>
+    <string name="about"> "\nThis app was created by Jacob Patton and Abraham Kali as part of the Advanded Android App class at Berea College. \n"</string>
+   
+
+<string name="title_activity_about">About Berea Convo</string>
+    <string name="about_title">About</string>
+    <string name="about_info">"This app was created by Jacob Patton and Abraham Kali as part of the Advanded Android App class at Berea College. It is an open source app licenced under the Apache License Version 2.0 and always welcome improvements. If you would enjoy creating such project, consider taking a computer sceince class or even majoring or minoring in computer Science. "</string>
+    <string name="help_title">Instructions</string>
+    <string name="help_info">        &lt;b>Viewing Convos&lt;/b>&lt;br>
+        To view a certain convocation simply click on the title of the convo.This will either open it in a new window or in the display panel.  
+       &lt;br> &lt;br>&lt;b>Sorting Convos&lt;/b>&lt;br>
+        To toggle between Fall and Spring convocations, click the button in the top right corner. 
+        If you would like to sort the convocations by time, either slide your finger to the right, or click the top left button to show the menu. 
+        &lt;br>&lt;br>&lt;b>Attendance&lt;/b>&lt;br>
+        To mark a convocation as attended, long press on the list title until a green arrow appears. This does NOT mark it as attended in the Berea College database. It is simply a way to help you keep track of how many you have attended. You still are required to turn in your convocation card.</string>
+    <string name="resources_title">Resources</string>
+    <string name="resources_info">&lt;b>SlidingMenu &lt;/b>&lt;br>
+        \u00A9 2013 Jeremy Feinstein&lt;br>
+        SlidingMenu is licensed under the Apache License Version 2.0.
+        &lt;br>&lt;br>
+        &lt;b>ActionBarSherlock &lt;/b>&lt;br>
+        \u00A9 2013 Jake Wharton&lt;br>
+        ActionBarSherlock is licensed under the Apache License Version 2.0.
+        &lt;br>&lt;br>
+		&lt;b>The Apache License Version 2.0&lt;/b>&lt;br>
+		You may obtain a copy of the License at&lt;br>
+		&lt;a href=\'http://www.apache.org/licenses/LICENSE-2.0\'>"http://www.apache.org/licenses/LICENSE-2.0&lt;/a>
+		&lt;br>Unless required by applicable law or agreed to in writing,software distributed under the License is distributed on an \'AS IS\'BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,either express or implied. See the License for the specific language governing permissions and limitations under the License.
+		</string>
+    
+    
+    <string name="title_activity_swag">Free Prizes</string>
+    <string name="swag_intro">The Largest Free Online Rewards Program</string>
+	<string name="swag_1">Register for FREE and earn 30 Swag Bucks.</string>
+	<string name="swag_2">Earn virtual currency called Swag Bucks by searching and taking polls.</string>
+	<string name="swag_3">"Cash in Swag Bucks for gift cards and other great prizes.\nOver $38 million in prizes awarded."</string>
 </resources>
