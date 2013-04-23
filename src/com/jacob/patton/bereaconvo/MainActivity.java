@@ -200,7 +200,7 @@ public class MainActivity extends SherlockFragmentActivity
 
 	/**
 	 * This creates the master list (database) of convocations in list that contains Arrays. 
-	 * [ID,semester, date,time, Title, description]
+	 * [ID,semester, date,time, Title, Speaker, description]
 	 */
 	private void createMaster(){
 		
@@ -402,6 +402,86 @@ public class MainActivity extends SherlockFragmentActivity
 		articleFrag.showBlankArticle();
 	}
 	
+	/**
+	 * used by side menu to mark a convocation
+	 * as attended. 	
+	 */
+	public void markConvo(int position){
+	
+		// turns the id int and integer for the list
+		String convoID = dbDisplay.get(position)[0];
+			
+		// Adding the ID to the list.
+		for(int i =0; i<database.size();i++){
+			// look to see if the ID from dbDisplay and the database is the same. 
+			String ID = database.get(i)[0];
+			if(convoID == ID ){
+				// if they match, switch whatever it is and toast the switch.  
+				if(database.get(i)[7].equals("0")){
+					database.get(i)[7] = "1";
+					
+					  Toast.makeText(this,
+					            "Marked as attended",
+					            Toast.LENGTH_SHORT).show();
+					        
+				}
+		 		else{
+		 			  Toast.makeText(this,
+		 			            "Marked as unattended",
+		 			            Toast.LENGTH_SHORT).show();
+		 			        
+		 			database.get(i)[7] = "0";
+		 			
+		 		}
+				
+				// This is needed to update the checkmarks. 
+				longPressed = true;
+				//update the menu. 
+				sortData();
+				
+				// ends the for statement once found to save resources. 
+				return;
+			
+			}
+			
+		}			
+	}
+	
+	/**
+	 * used to find the number of convos attended per semester.	
+	 */
+	private int sortAttandance(String sem){
+		// set the count at 0
+		int count= 0;
+		// Find all the attendance positions that are 1 and the semester that was passed. 
+		for(int i = 0; i< database.size(); i++){
+			if((database.get(i)[1].equals(sem))&&(database.get(i)[7].equals("1"))){
+			count++;
+			}
+		}
+		// return the total count. 
+		return count;
+	}
+	
+	/**
+	 * used to save the attendance to a string. 	
+	 */
+	private void saveFinalAttended(){	
+		
+		//adding to the string for saving.
+		// Start with blank string
+		storedAttendance = "";
+		// loop through adding the 1 or 0 to the string
+		
+		for(int i=0;i< database.size();i++){
+			storedAttendance+=database.get(i)[7] ;
+		}
+		
+	}
+	
+	/**
+	 * Commands for the menu buttons.  	
+	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		//This is where the menu button actions are set. 
@@ -486,61 +566,21 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 	}
 	
-	public void markConvo(int position){
+	//This is whathappens when the app is paused. (rotating, pausing, etc)
+	public void onPause() {
+	    super.onPause(); 
+	    saveFinalAttended();
+	    
+	    // This saves the attendance count. 
+	    SharedPreferences settings = getPreferences(MODE_PRIVATE);
+	    SharedPreferences.Editor editor = settings.edit();
+	    editor.putString("AttendedConvos", storedAttendance);
+	    
+	    editor.commit();
+  }
+  
 	
-		// turns the id int and integer for the list
-		String convoID = dbDisplay.get(position)[0];
-			
-		// Adding the ID to the list.
-		for(int i =0; i<database.size();i++){
-			// look to see if the ID from dbDisplay and the database is the same. 
-			String ID = database.get(i)[0];
-			if(convoID == ID ){
-				// if they match, switch whatever it is and toast the switch.  
-				if(database.get(i)[7].equals("0")){
-					database.get(i)[7] = "1";
-					
-					  Toast.makeText(this,
-					            "Marked as attended",
-					            Toast.LENGTH_SHORT).show();
-					        
-				}
-		 		else{
-		 			  Toast.makeText(this,
-		 			            "Marked as unattended",
-		 			            Toast.LENGTH_SHORT).show();
-		 			        
-		 			database.get(i)[7] = "0";
-		 			
-		 		}
-				
-				// This is needed to update the checkmarks. 
-				longPressed = true;
-				//update the menu. 
-				sortData();
-				
-				// ends the for statement once found to save resources. 
-				return;
-			
-			}
-			
-		}			
-	}
-	
-	private int sortAttandance(String sem){
-		// set the count at 0
-		int count= 0;
-		// Find all the attendance positions that are 1 and the semester that was passed. 
-		for(int i = 0; i< database.size(); i++){
-			if((database.get(i)[1].equals(sem))&&(database.get(i)[7].equals("1"))){
-			count++;
-			}
-		}
-		// return the total count. 
-		return count;
-	}
-	
-	// when it needs to save the state (rotating, pausing, etc), it does the following. 
+	// When restoring from rotating, pausing, etc it does the following.  
 	  @Override
 	public void onSaveInstanceState(Bundle savedInstanceState){
 		  // puts final attendance in a string and saves.  
@@ -580,34 +620,7 @@ public class MainActivity extends SherlockFragmentActivity
 	    }
 	    
 	
-	  public void onPause() {
-		    super.onPause(); 
-		    saveFinalAttended();
-		    
-		    // This saves the attendance count. 
-		    SharedPreferences settings = getPreferences(MODE_PRIVATE);
-		    SharedPreferences.Editor editor = settings.edit();
-		    editor.putString("AttendedConvos", storedAttendance);
-		    
-		    editor.commit();
-	  }
 	  
-	  
-	/**
-	 * used to save the attendance to a string. 	
-	 */
-	private void saveFinalAttended(){	
-		
-		//adding to the string for saving.
-		// Start with blank string
-		storedAttendance = "";
-		// loop through adding the 1 or 0 to the string
-		
-		for(int i=0;i< database.size();i++){
-			storedAttendance+=database.get(i)[7] ;
-		}
-		
-	}
 	
 	
 	/*
