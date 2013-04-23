@@ -70,11 +70,6 @@ public class MenuFragment extends SherlockListFragment{
 	      @Override
 	      public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long id) {
 	       	if(hasData == true){
-	       		// currently makes a toast to say clicked, shoudl be chanced to marked.      
-	    	  Toast.makeText(getActivity(),
-	            "Marked as attended",
-	            Toast.LENGTH_SHORT).show();
-	        
 	    	  //runs the mark convo routine in the main activity. 
 	    	  mainActivityCall.markConvo(position);
 	       	}

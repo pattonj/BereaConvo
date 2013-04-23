@@ -10,10 +10,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
+
 
 
 public class MainActivity extends SherlockFragmentActivity 
@@ -126,7 +129,6 @@ public class MainActivity extends SherlockFragmentActivity
 	        menu.setFadeDegree(0.35f);
 	        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
 	        menu.setMenu(R.layout.sidemenu);
-	        
 	        // This gets the current semester by month. 
 	        Calendar cal = Calendar.getInstance();
 	        int month = cal.get(Calendar.MONTH);
@@ -494,12 +496,20 @@ public class MainActivity extends SherlockFragmentActivity
 			// look to see if the ID from dbDisplay and the database is the same. 
 			String ID = database.get(i)[0];
 			if(convoID == ID ){
-				// if they match, switch whatever it is. 
+				// if they match, switch whatever it is and toast the switch.  
 				if(database.get(i)[7].equals("0")){
 					database.get(i)[7] = "1";
 					
+					  Toast.makeText(this,
+					            "Marked as attended",
+					            Toast.LENGTH_SHORT).show();
+					        
 				}
 		 		else{
+		 			  Toast.makeText(this,
+		 			            "Marked as unattended",
+		 			            Toast.LENGTH_SHORT).show();
+		 			        
 		 			database.get(i)[7] = "0";
 		 			
 		 		}
