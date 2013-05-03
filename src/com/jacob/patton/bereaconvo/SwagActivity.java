@@ -1,8 +1,10 @@
 package com.jacob.patton.bereaconvo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
@@ -16,6 +18,10 @@ public class SwagActivity extends SherlockActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		if(settings.getInt("Theme",0) != 0){
+			setTheme(R.style.Theme_BereaBlue);
+		}
 		setContentView(R.layout.swag_activity);
 		// Finds the button and sets the action. 
 		btn = (Button)findViewById(R.id.SignUp);

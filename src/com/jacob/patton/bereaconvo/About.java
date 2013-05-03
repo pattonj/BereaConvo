@@ -1,6 +1,8 @@
 package com.jacob.patton.bereaconvo;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.widget.TextView;
 
@@ -14,6 +16,10 @@ public class About extends SherlockActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		if(settings.getInt("Theme",0) != 0){
+			setTheme(R.style.Theme_BereaBlue);
+		}
 		setContentView(R.layout.about);
 		
 		// I did this so that it could use bold print with HTML.  

@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockListFragment;
 
 // This uses SherlockListFragment to implement the list. 

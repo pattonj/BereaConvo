@@ -7,11 +7,11 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -72,10 +72,11 @@ public class MainActivity extends SherlockFragmentActivity
 	// creates menus. 
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		//This enables the back/up arrow in the top left corner, which lets the user know there is a menu. 
+		//This would enable the back/up arrow in the top left corner, which lets the user know there is a menu. 
 		// The display arrow drawable cane be set via style. (See the slidingmenu list for an example.) 
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		
+		//getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setIcon(R.drawable.menu_icon);
 		
 		//sets the menu buttons. 
 		menu.add(semester)
@@ -85,9 +86,13 @@ public class MainActivity extends SherlockFragmentActivity
 		menu.add("About")
     	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		
+		
 		menu.add("Attendance")
         	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-        
+		
+		menu.add("Theme")
+		.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+		
         menu.add("Free Prizes")
     	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         
@@ -99,8 +104,15 @@ public class MainActivity extends SherlockFragmentActivity
 	protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			
+			// theme must be set before setting the view. 
+			// accessing the preferences. 
+			SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+			if(settings.getInt("Theme",0) != 0){
+				setTheme(R.style.Theme_BereaBlue);
+			}
 			// set content view
 			setContentView(R.layout.main_fragment_activity);
+			
 			
 			
 			
@@ -127,7 +139,7 @@ public class MainActivity extends SherlockFragmentActivity
 	        menu.setShadowDrawable(R.drawable.shadow);
 	        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 	        menu.setFadeDegree(0.35f);
-	        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+	        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 	        menu.setMenu(R.layout.sidemenu);
 	        // This gets the current semester by month. 
 	        Calendar cal = Calendar.getInstance();
@@ -144,7 +156,7 @@ public class MainActivity extends SherlockFragmentActivity
 	        // Creates the data
 	        createMaster();
 		     //sorts the data. 
-		     sortData();
+	        sortData();
 
 		     // if we are in landscape/large layout, show a blank article. 
 		     if(!smallLayout){
@@ -156,6 +168,9 @@ public class MainActivity extends SherlockFragmentActivity
 		     afternoonButton = (TextView) menu.findViewById(R.id.AFTERNOON);
 	         eveningButton = (TextView) menu.findViewById(R.id.EVENING);
 	         specialButton = (TextView) menu.findViewById(R.id.SPECIAL);
+	         
+	         // highlights "All" from the side menu.  
+	         sideHighlight(0); 
 	         
 	         // sets the side button action, which sorts the data.  
 	         allButton.setOnClickListener(new View.OnClickListener() {
@@ -246,12 +261,55 @@ public class MainActivity extends SherlockFragmentActivity
 		
 	}
 	
+	
 	/** 
-	 * Used by the side menu. 
+	 * Used by the side menu to highlight the selected one. 
+	 * @param ID
+	 */
+	private void sideHighlight(int position){
+		//This sets the sort ID, sorts the data and closes the side menu. 
+		switch (position){
+		
+		case 0: 
+			allButton.setBackgroundColor(getResources().getColor(R.color.faded_gray));
+			afternoonButton.setBackgroundColor(getResources().getColor(R.color.invisible));
+		    eveningButton.setBackgroundColor(getResources().getColor(R.color.invisible));
+		    specialButton.setBackgroundColor(getResources().getColor(R.color.invisible));
+			break;
+			
+		case 1: 
+			allButton.setBackgroundColor(getResources().getColor(R.color.invisible));
+			afternoonButton.setBackgroundColor(getResources().getColor(R.color.faded_gray));
+		    eveningButton.setBackgroundColor(getResources().getColor(R.color.invisible));
+		    specialButton.setBackgroundColor(getResources().getColor(R.color.invisible));
+			break;
+		case 2: 
+			allButton.setBackgroundColor(getResources().getColor(R.color.invisible));
+			afternoonButton.setBackgroundColor(getResources().getColor(R.color.invisible));
+		    eveningButton.setBackgroundColor(getResources().getColor(R.color.faded_gray));
+		    specialButton.setBackgroundColor(getResources().getColor(R.color.invisible));
+			break;
+		case 3: 
+			allButton.setBackgroundColor(getResources().getColor(R.color.invisible));
+			afternoonButton.setBackgroundColor(getResources().getColor(R.color.invisible));
+		    eveningButton.setBackgroundColor(getResources().getColor(R.color.invisible));
+		    specialButton.setBackgroundColor(getResources().getColor(R.color.faded_gray));
+			break;
+		
+		}
+		
+		
+		
+	}
+	
+	
+	/** 
+	 * Used by the side menu to sort the data. 
 	 * @param ID
 	 */
 	private void sortDataClick(int option){
 		//This sets the sort ID, sorts the data and closes the side menu. 
+   	 	sideHighlight(option);
 		sortID = option;
 		sortData();
    	 	menu.showContent();
@@ -524,11 +582,36 @@ public class MainActivity extends SherlockFragmentActivity
 			startActivity(intent);
 		}
 		
+		else if(item.getTitle().equals("Theme")){
+			SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+			SharedPreferences.Editor editor = settings.edit();
+			
+			if(settings.getInt("Theme",0) != 0){
+				editor.putInt("Theme", 0);
+				setTheme(R.style.Theme_BereaBlue);
+				super.recreate();
+			}
+			else{
+				editor.putInt("Theme", 1);
+				setTheme(R.style.Theme_Sherlock);
+				super.recreate();
+			}
+			
+		    editor.commit();
+		}
+		
 		// this is what happens if you press the home button. 
 		else if(item.getItemId()==android.R.id.home){
 			if(showmenu == true){
 				// if the side menu is open, close it. 
-				menu.showMenu();
+				if (menu.isMenuShowing()) {
+					menu.showContent();
+					
+				}
+				else{
+					menu.showMenu();
+
+				}
 			}
 			else if(showmenu== false){
 				// if we are showing an article (showmenu= false)
@@ -575,7 +658,6 @@ public class MainActivity extends SherlockFragmentActivity
 	    SharedPreferences settings = getPreferences(MODE_PRIVATE);
 	    SharedPreferences.Editor editor = settings.edit();
 	    editor.putString("AttendedConvos", storedAttendance);
-	    
 	    editor.commit();
   }
   
@@ -607,7 +689,8 @@ public class MainActivity extends SherlockFragmentActivity
 	    	 displayedArticle =savedInstanceState.getInt(STORED_POSITION);
 	    	 displayingArticle = savedInstanceState.getBoolean(DISPLAYING_ARTICLE);
 	    	 createMaster();
-	    	 sortData();
+	    	 // sorts the data and highlights the proper row. 
+	    	 sortDataClick(sortID);
 	    	 // if we are in large/landscape, show the aritcle. 
 	    	 if((smallLayout == false)&&(!dbDisplay.isEmpty())){
 	    		 displayArticleData(displayedArticle);
