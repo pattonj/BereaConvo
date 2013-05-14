@@ -117,9 +117,9 @@ public class MenuFragment extends SherlockListFragment{
 	public void updateMenu(List<String[]> data){
 		 // clears the data in the list. 
 		 convodata.clear();
-		 
+		 int size = data.size();
 		 // maps the new convodata with the data it just recieved. 
-	        for(int i = 0; i < data.size(); i++){
+	        for(int i = 0; i < size; i++){
 	        	hasData = true;
 	        	// This needs to be inside the for loop to create a new map every time otherwise it would replace the old values. 
 	            HashMap<String, Object> map = new HashMap<String, Object>();
