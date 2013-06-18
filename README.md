@@ -1,9 +1,9 @@
-BereaConvo
+**BereaConvo**
 ==========
 
 An application for viewing information about Berea College convocations. 
 
-Instructions
+**Instructions**
  
  Viewing Convos
  	To view a certain convocation simply click on the title of the convo.This will either open it in a new window or in the display panel.  
@@ -16,10 +16,14 @@ Attendance
 	To mark a convocation as attended, long press on the list title until a green arrow appears. This does NOT mark it as attended in the Berea College database. It is simply a way to help you keep track of how many you have attended. You still are required to turn in your convocation card.
 
 
+**Known Issuese**
+- The Berea Blue background does not set on About or Swag Activity. This is because WindowBackground does not work via the style for 2.2/2.3
+- Occasionally the image for the side menu does not tile as the XML layout specifies, but rather streches. This is a bug with Android and not the code. 
 
+**Resources**
 Berea Convo uses the ActionBarSherlock and SlidingMenu Libraries 
 - http://actionbarsherlock.com/
--https://github.com/jfeinstein10/SlidingMenu
+- https://github.com/jfeinstein10/SlidingMenu
 
 Make sure that your support v4 library is up to date on the libraries and app to run properly 
 
