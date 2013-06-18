@@ -4,7 +4,7 @@
  * aapt tool from the resource data it found.  It
  * should not be modified by hand.
  */
-package com.actionbarsherlock;
+package com.jeremyfeinstein.slidingmenu.lib;
 
 public final class R {
 	public static final class id {
@@ -19,15 +19,20 @@ public final class R {
 		public static final int edit_query = 0x7f040031;
 		public static final int abs__action_bar_subtitle = 0x7f04001c;
 		public static final int abs__activity_chooser_view_content = 0x7f040020;
+		public static final int selected_view = 0x7f040014;
+		public static final int margin = 0x7f040012;
 		public static final int abs__search_voice_btn = 0x7f04003c;
 		public static final int disableHome = 0x7f040009;
 		public static final int showTitle = 0x7f040007;
+		public static final int right = 0x7f040011;
 		public static final int abs__up = 0x7f04000b;
 		public static final int abs__split_action_bar = 0x7f04002e;
 		public static final int abs__action_context_bar = 0x7f04002c;
 		public static final int abs__list_item = 0x7f040024;
 		public static final int abs__progress_horizontal = 0x7f04000f;
 		public static final int showHome = 0x7f040005;
+		public static final int fullscreen = 0x7f040013;
+		public static final int slidingmenumain = 0x7f04004f;
 		public static final int abs__home = 0x7f04000a;
 		public static final int abs__search_src_text = 0x7f040038;
 		public static final int abs__search_mag_icon = 0x7f040036;
@@ -44,6 +49,7 @@ public final class R {
 		public static final int abs__search_plate = 0x7f040037;
 		public static final int abs__action_mode_close_button = 0x7f04001f;
 		public static final int wrap_content = 0x7f040000;
+		public static final int left = 0x7f040010;
 		public static final int listMode = 0x7f040002;
 		public static final int abs__title = 0x7f040026;
 		public static final int abs__progress_circular = 0x7f04000e;
@@ -194,6 +200,7 @@ public final class R {
 		public static final int abs__simple_dropdown_hint = 0x7f030015;
 		public static final int abs__list_menu_item_checkbox = 0x7f03000b;
 		public static final int abs__list_menu_item_icon = 0x7f03000c;
+		public static final int slidingmenumain = 0x7f03001d;
 		public static final int abs__action_mode_bar = 0x7f030007;
 		public static final int sherlock_spinner_item = 0x7f03001b;
 		public static final int abs__screen_simple = 0x7f030011;
@@ -233,7 +240,9 @@ public final class R {
 		public static final int SherlockActivityChooserView_initialActivityCount = 1;
 		public static final int SherlockActionBar_itemPadding = 18;
 		public static final int SherlockTheme_actionBarWidgetTheme = 6;
+		public static final int SlidingMenu_behindOffset = 3;
 		public static final int[] SherlockSearchView = { 0x0101011f, 0x01010220, 0x01010264, 0x7f010060, 0x7f010061 };
+		public static final int SlidingMenu_selectorEnabled = 12;
 		public static final int SherlockSpinner_android_dropDownHorizontalOffset = 5;
 		public static final int SherlockMenuGroup_android_orderInCategory = 4;
 		public static final int SherlockTheme_actionOverflowButtonStyle = 3;
@@ -251,12 +260,15 @@ public final class R {
 		public static final int SherlockActivityChooserView_expandActivityOverflowButtonDrawable = 2;
 		public static final int SherlockActionBar_backgroundSplit = 3;
 		public static final int SherlockMenuView_headerBackground = 3;
+		public static final int SlidingMenu_shadowDrawable = 8;
 		public static final int SherlockActionBar_subtitleTextStyle = 1;
+		public static final int SlidingMenu_fadeEnabled = 10;
 		public static final int SherlockTheme_textColorSearchUrl = 40;
 		public static final int SherlockActionBar_icon = 10;
 		public static final int SherlockTheme_dropDownListViewStyle = 54;
 		public static final int SherlockTheme_searchViewSearchIcon = 34;
 		public static final int SherlockMenuItem_android_alphabeticShortcut = 9;
+		public static final int SlidingMenu_viewBehind = 2;
 		public static final int[] SherlockActionMenuItemView = { 0x0101013f };
 		public static final int SherlockSpinner_android_dropDownWidth = 4;
 		public static final int SherlockActionBar_indeterminateProgressStyle = 16;
@@ -267,11 +279,14 @@ public final class R {
 		public static final int SherlockMenuView_horizontalDivider = 1;
 		public static final int[] SherlockActivityChooserView = { 0x010100d4, 0x7f01005e, 0x7f01005f };
 		public static final int[] SherlockMenuItem = { 0x01010002, 0x0101000e, 0x010100d0, 0x01010106, 0x01010194, 0x010101de, 0x010101df, 0x010101e1, 0x010101e2, 0x010101e3, 0x010101e4, 0x010101e5, 0x0101026f, 0x010102d9, 0x010102fb, 0x010102fc, 0x01010389 };
+		public static final int SlidingMenu_behindWidth = 4;
 		public static final int SherlockTheme_actionBarStyle = 4;
 		public static final int SherlockTheme_windowSplitActionBar = 62;
 		public static final int SherlockMenuGroup_android_enabled = 0;
 		public static final int SherlockSpinner_android_gravity = 0;
+		public static final int SlidingMenu_fadeDegree = 11;
 		public static final int SherlockActionBar_customNavigationLayout = 13;
+		public static final int SlidingMenu_touchModeBehind = 7;
 		public static final int SherlockSpinner_android_prompt = 3;
 		public static final int SherlockTheme_actionBarTabBarStyle = 1;
 		public static final int SherlockActionBar_title = 8;
@@ -312,6 +327,7 @@ public final class R {
 		public static final int SherlockTheme_actionModeCloseButtonStyle = 13;
 		public static final int SherlockSearchView_android_inputType = 1;
 		public static final int SherlockActivityChooserView_android_background = 0;
+		public static final int SlidingMenu_shadowWidth = 9;
 		public static final int SherlockTheme_dividerVertical = 50;
 		public static final int SherlockTheme_actionModePopupWindowStyle = 18;
 		public static final int SherlockTheme_textAppearanceSmallPopupMenu = 23;
@@ -320,21 +336,25 @@ public final class R {
 		public static final int SherlockTheme_popupMenuStyle = 55;
 		public static final int[] SherlockMenuView = { 0x7f010056, 0x7f010057, 0x7f010058, 0x7f010059, 0x7f01005a, 0x7f01005b, 0x7f01005c, 0x7f01005d };
 		public static final int SherlockSpinner_android_popupPromptView = 7;
+		public static final int SlidingMenu_selectorDrawable = 13;
 		public static final int SherlockActionBar_background = 2;
 		public static final int SherlockSpinner_android_dropDownSelector = 1;
 		public static final int SherlockTheme_actionModeSplitBackground = 15;
 		public static final int SherlockTheme_actionModeStyle = 12;
 		public static final int SherlockTheme_searchAutoCompleteTextView = 30;
+		public static final int SlidingMenu_mode = 0;
 		public static final int SherlockMenuView_windowAnimationStyle = 5;
 		public static final int SherlockTheme_textAppearanceSearchResultTitle = 42;
 		public static final int SherlockTheme_listPreferredItemPaddingRight = 46;
 		public static final int SherlockMenuItem_android_numericShortcut = 10;
 		public static final int SherlockMenuItem_android_showAsAction = 13;
 		public static final int SherlockTheme_actionButtonStyle = 52;
+		public static final int SlidingMenu_touchModeAbove = 6;
 		public static final int SherlockMenuGroup_android_checkableBehavior = 5;
 		public static final int SherlockTheme_searchResultListItemHeight = 41;
 		public static final int SherlockMenuGroup_android_id = 1;
 		public static final int SherlockTheme_actionDropDownStyle = 51;
+		public static final int SlidingMenu_behindScrollScale = 5;
 		public static final int SherlockSearchView_android_imeOptions = 2;
 		public static final int SherlockSearchView_queryHint = 4;
 		public static final int SherlockActionMode_titleTextStyle = 0;
@@ -346,6 +366,7 @@ public final class R {
 		public static final int SherlockTheme_spinnerItemStyle = 28;
 		public static final int SherlockMenuItem_android_visible = 4;
 		public static final int SherlockMenuItem_android_orderInCategory = 6;
+		public static final int SlidingMenu_viewAbove = 1;
 		public static final int SherlockActionBar_titleTextStyle = 0;
 		public static final int SherlockMenuView_preserveIconSpacing = 7;
 		public static final int SherlockTheme_windowActionBar = 59;
@@ -354,6 +375,7 @@ public final class R {
 		public static final int[] SherlockView = { 0x010100da };
 		public static final int SherlockMenuItem_android_onClick = 12;
 		public static final int SherlockMenuItem_android_actionLayout = 14;
+		public static final int[] SlidingMenu = { 0x7f010062, 0x7f010063, 0x7f010064, 0x7f010065, 0x7f010066, 0x7f010067, 0x7f010068, 0x7f010069, 0x7f01006a, 0x7f01006b, 0x7f01006c, 0x7f01006d, 0x7f01006e, 0x7f01006f };
 		public static final int SherlockTheme_searchViewVoiceIcon = 35;
 		public static final int[] SherlockSpinner = { 0x010100af, 0x01010175, 0x01010176, 0x0101017b, 0x01010262, 0x010102ac, 0x010102ad, 0x01010411 };
 		public static final int SherlockTheme_windowActionBarOverlay = 60;
@@ -476,20 +498,27 @@ public final class R {
 		public static final int dropDownHintAppearance = 0x7f010048;
 		public static final int textAppearanceSmall = 0x7f01001e;
 		public static final int actionModeStyle = 0x7f010012;
+		public static final int shadowDrawable = 0x7f01006a;
 		public static final int searchViewCloseIcon = 0x7f010026;
 		public static final int activityChooserViewStyle = 0x7f010046;
 		public static final int itemIconDisabledAlpha = 0x7f01005c;
+		public static final int fadeDegree = 0x7f01006d;
 		public static final int headerBackground = 0x7f010059;
 		public static final int dividerVertical = 0x7f010038;
 		public static final int actionModeCloseDrawable = 0x7f010016;
+		public static final int viewBehind = 0x7f010064;
 		public static final int actionBarDivider = 0x7f01000e;
+		public static final int shadowWidth = 0x7f01006b;
 		public static final int searchViewVoiceIcon = 0x7f010029;
 		public static final int actionBarWidgetTheme = 0x7f01000c;
 		public static final int spinnerDropDownItemStyle = 0x7f010023;
 		public static final int divider = 0x7f010005;
 		public static final int navigationMode = 0x7f010049;
+		public static final int touchModeAbove = 0x7f010068;
 		public static final int listPopupWindowStyle = 0x7f010045;
+		public static final int touchModeBehind = 0x7f010069;
 		public static final int actionBarItemBackground = 0x7f01000f;
+		public static final int behindWidth = 0x7f010066;
 		public static final int homeLayout = 0x7f010051;
 		public static final int progressBarPadding = 0x7f010054;
 		public static final int horizontalDivider = 0x7f010057;
@@ -499,6 +528,7 @@ public final class R {
 		public static final int backgroundSplit = 0x7f010003;
 		public static final int actionBarTabBarStyle = 0x7f010007;
 		public static final int textAppearanceSearchResultSubtitle = 0x7f010031;
+		public static final int mode = 0x7f010062;
 		public static final int title = 0x7f01004b;
 		public static final int preserveIconSpacing = 0x7f01005d;
 		public static final int actionBarSize = 0x7f01000d;
@@ -535,8 +565,9 @@ public final class R {
 		public static final int windowContentOverlay = 0x7f01001b;
 		public static final int actionBarStyle = 0x7f01000a;
 		public static final int windowActionModeOverlay = 0x7f010043;
-		public static final int indeterminateProgressStyle = 0x7f010053;
+		public static final int selectorDrawable = 0x7f01006f;
 		public static final int expandActivityOverflowButtonDrawable = 0x7f01005f;
+		public static final int indeterminateProgressStyle = 0x7f010053;
 		public static final int actionModeShareDrawable = 0x7f010017;
 		public static final int activatedBackgroundIndicator = 0x7f010047;
 		public static final int windowNoTitle = 0x7f010040;
@@ -544,15 +575,18 @@ public final class R {
 		public static final int textAppearanceLargePopupMenu = 0x7f01001c;
 		public static final int textColorPrimaryInverse = 0x7f010021;
 		public static final int verticalDivider = 0x7f010058;
+		public static final int fadeEnabled = 0x7f01006c;
 		public static final int homeAsUpIndicator = 0x7f01003b;
 		public static final int actionModePopupWindowStyle = 0x7f010018;
-		public static final int itemBackground = 0x7f01005a;
 		public static final int iconifiedByDefault = 0x7f010060;
+		public static final int itemBackground = 0x7f01005a;
 		public static final int searchResultListItemHeight = 0x7f01002f;
 		public static final int actionModeCloseButtonStyle = 0x7f010013;
 		public static final int actionBarSplitStyle = 0x7f01000b;
 		public static final int popupMenuStyle = 0x7f01003d;
+		public static final int behindScrollScale = 0x7f010067;
 		public static final int searchViewGoIcon = 0x7f010027;
+		public static final int selectorEnabled = 0x7f01006e;
 		public static final int actionSpinnerItemStyle = 0x7f01003f;
 		public static final int dropdownListPreferredItemHeight = 0x7f01003e;
 		public static final int buttonStyleSmall = 0x7f010019;
@@ -561,6 +595,7 @@ public final class R {
 		public static final int icon = 0x7f01004d;
 		public static final int customNavigationLayout = 0x7f010050;
 		public static final int actionModeSplitBackground = 0x7f010015;
+		public static final int viewAbove = 0x7f010063;
 		public static final int queryHint = 0x7f010061;
 		public static final int listPreferredItemPaddingLeft = 0x7f010033;
 		public static final int windowActionBarOverlay = 0x7f010042;
@@ -571,6 +606,7 @@ public final class R {
 		public static final int subtitle = 0x7f01004c;
 		public static final int actionDropDownStyle = 0x7f010039;
 		public static final int actionMenuTextColor = 0x7f010011;
+		public static final int behindOffset = 0x7f010065;
 	}
 	public static final class bool {
 		public static final int abs__config_allowActionMenuItemTextWithIcon = 0x7f050005;

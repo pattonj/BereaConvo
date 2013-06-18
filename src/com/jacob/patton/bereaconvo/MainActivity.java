@@ -3,7 +3,9 @@ package com.jacob.patton.bereaconvo;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,9 +17,10 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.slidingmenu.lib.SlidingMenu;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 
+// A to-do list can be found at the bottom of the page
 
 public class MainActivity extends SherlockFragmentActivity 
 		implements MenuFragment.onArticleSelected{
@@ -81,42 +84,45 @@ public class MainActivity extends SherlockFragmentActivity
 		//sets the menu buttons. 
 		menu.add(semester)
         	.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-        
-        
+                
 		menu.add("About")
-    	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+    		.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		
 		
 		menu.add("Attendance")
         	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		
 		menu.add("Theme")
-		.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+			.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		
         menu.add("Free Prizes")
-    	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+        	.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         
         return true;
     }
 	
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			
-			// theme must be set before setting the view. 
-			// accessing the preferences. 
-			SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-			if(settings.getInt("Theme",0) != 0){
-				setTheme(R.style.Theme_BereaBlue);
-			}
-			// set content view
-			setContentView(R.layout.main_fragment_activity);
-			
-			
-			
-			
-			// Look for the id for small layout
+	 protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		// accessing the preferences. 
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		// theme must be set before setting the view. 
+		if(settings.getInt("Theme",0) != 0){
+			setTheme(R.style.Theme_BereaBlue);
+		}
+		
+		// App updated and EULA alerts
+		createAlerts();
+				
+		// set content view
+		setContentView(R.layout.main_fragment_activity);
+		
+				
+		
+		// Look for the id for small layout
 		if(findViewById(R.id.article_frame_small)!= null){
 				// find article fragment
 				ArticleFragment articleFrag = (ArticleFragment) getSupportFragmentManager().findFragmentById(R.id.article_frame_small);
@@ -129,90 +135,150 @@ public class MainActivity extends SherlockFragmentActivity
 				
 		}
 		
+				
+        // configure the SlidingMenu
+		menu = new SlidingMenu(this);
+        menu.setMode(SlidingMenu.LEFT);
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        menu.setShadowWidthRes(R.dimen.shadow_width);
+        menu.setShadowDrawable(R.drawable.shadow);
+        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        menu.setFadeDegree(0.35f);
+        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        menu.setMenu(R.layout.sidemenu);
+        // This gets the current semester by month. 
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH);
+        // sets the semester variable depending on the month. 
+        if(month > 5 ){
+        	semester = "Fall";
+        }
+        else{
+        	semester ="Spring";
+        }
+        	
+        	
+        // Creates the data
+        createMaster();
+	     //sorts the data. 
+        sortData();
+
+	     // if we are in landscape/large layout, show a blank article. 
+	     if(!smallLayout){
+	    	 displayBlankArticleData();
+	     }
+	     
+        // creates the side buttons. 
+         allButton = (TextView) menu.findViewById(R.id.ALL);
+	     afternoonButton = (TextView) menu.findViewById(R.id.AFTERNOON);
+         eveningButton = (TextView) menu.findViewById(R.id.EVENING);
+         specialButton = (TextView) menu.findViewById(R.id.SPECIAL);
+         
+         // highlights "All" from the side menu.  
+         sideHighlight(0); 
+         
+         // sets the side button action, which sorts the data.  
+         allButton.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View v) {
+            	 // tell it that we did press the button, and to sort the menu. 
+            	 menuButtonPressed = true;
+            	 // Passes the variable on how to sort the data. 
+            	 sortDataClick(0);
+            	
+             }
+         });
+        
+         
+         
+         afternoonButton.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View v) {
+            	 menuButtonPressed = true;
+            	 sortDataClick(1);
+            	
+             }
+         });
+         
+         eveningButton.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View v) {
+            	 menuButtonPressed = true;
+            	 sortDataClick(2);
+            	
+            	 
+             }
+         });
+         
+         specialButton.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View v) {
+            	 menuButtonPressed = true;
+            	 sortDataClick(3);
+                
+            }
+         });
+              
+    }	
+
+	
+
+	/**
+	 * Used to create app version and EULA alerts
+	 * */
+	private void createAlerts(){
 		
+		final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		
+		//App updated info
+		
+		if(!settings.getString("version","").equals(getString(R.string.app_version) )){
+												
+			// User Agreement Message
+			new AlertDialog.Builder(this)
+			.setTitle(getString(R.string.intro_title))
+			.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+	                    public void onClick(DialogInterface dialog,int id) {
+	                    	SharedPreferences.Editor editor = settings.edit();
+			            	editor.putString("version", getString(R.string.app_version)) ;
+			        	    editor.commit();
+			        	    dialog.dismiss();
+	                    }
+			  })
+		
+
+			.setMessage(R.string.intro_text)
+			.show();
+		}
+
+		
+		// Determining if the EULA has been accepted			
+		if(settings.getInt("EULA",0) == 0){
 			
-	        // configure the SlidingMenu
-			menu = new SlidingMenu(this);
-	        menu.setMode(SlidingMenu.LEFT);
-	        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-	        menu.setShadowWidthRes(R.dimen.shadow_width);
-	        menu.setShadowDrawable(R.drawable.shadow);
-	        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-	        menu.setFadeDegree(0.35f);
-	        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-	        menu.setMenu(R.layout.sidemenu);
-	        // This gets the current semester by month. 
-	        Calendar cal = Calendar.getInstance();
-	        int month = cal.get(Calendar.MONTH);
-	        // sets the semester variable depending on the month. 
-	        if(month > 5 ){
-	        	semester = "Fall";
-	        }
-	        else{
-	        	semester ="Spring";
-	        }
-	        	
-	        	
-	        // Creates the data
-	        createMaster();
-		     //sorts the data. 
-	        sortData();
+			
+			// User Agreement Message
+			new AlertDialog.Builder(this)
+			.setTitle("User Agreement")
+			.setPositiveButton("Accept",new DialogInterface.OnClickListener() {
+	                    public void onClick(DialogInterface dialog,int id) {
+	                    	
+	                    	SharedPreferences.Editor editor = settings.edit();
+	                    	editor.putInt("EULA", 1);
+	                	    editor.commit();
+	                    }
+			  })
+			.setNegativeButton("Deny",new DialogInterface.OnClickListener() {
+	                    public void onClick(DialogInterface dialog,int id) {
+	                        // if this button is clicked, just close
+	                        
+	                        System.exit(0);
+	                    }
+			  })
 
-		     // if we are in landscape/large layout, show a blank article. 
-		     if(!smallLayout){
-		    	 displayBlankArticleData();
-		     }
-		     
-	        // creates the side buttons. 
-	         allButton = (TextView) menu.findViewById(R.id.ALL);
-		     afternoonButton = (TextView) menu.findViewById(R.id.AFTERNOON);
-	         eveningButton = (TextView) menu.findViewById(R.id.EVENING);
-	         specialButton = (TextView) menu.findViewById(R.id.SPECIAL);
-	         
-	         // highlights "All" from the side menu.  
-	         sideHighlight(0); 
-	         
-	         // sets the side button action, which sorts the data.  
-	         allButton.setOnClickListener(new View.OnClickListener() {
-	             public void onClick(View v) {
-	            	 // tell it that we did press the button, and to sort the menu. 
-	            	 menuButtonPressed = true;
-	            	 // Passes the variable on how to sort the data. 
-	            	 sortDataClick(0);
-	            	
-	             }
-	         });
-	        
-	         
-	         
-	         afternoonButton.setOnClickListener(new View.OnClickListener() {
-	             public void onClick(View v) {
-	            	 menuButtonPressed = true;
-	            	 sortDataClick(1);
-	            	
-	             }
-	         });
-	         
-	         eveningButton.setOnClickListener(new View.OnClickListener() {
-	             public void onClick(View v) {
-	            	 menuButtonPressed = true;
-	            	 sortDataClick(2);
-	            	
-	            	 
-	             }
-	         });
-	         
-	         specialButton.setOnClickListener(new View.OnClickListener() {
-	             public void onClick(View v) {
-	            	 menuButtonPressed = true;
-	            	 sortDataClick(3);
-	                
-	            }
-	         });
-	              
-	    }	
+			.setMessage(R.string.EULA)
+			.show();
+		}
 
-
+	}
+	
+	
 	/**
 	 * This creates the master list (database) of convocations in list that contains Arrays. 
 	 * [ID,semester, date,time, Title, Speaker, description]
@@ -440,6 +506,8 @@ public class MainActivity extends SherlockFragmentActivity
 			showmenu = false;
 			// Do not show the sliding menu
 			menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+			//change the icon to back
+			getSupportActionBar().setIcon(R.drawable.back_icon);
 			//commit the change. 
 			ft.commit(); 
 			
@@ -492,7 +560,7 @@ public class MainActivity extends SherlockFragmentActivity
 		 			
 		 		}
 				
-				// This is needed to update the checkmarks. 
+				// This is needed to update the checkmarks in the displayed area. 
 				longPressed = true;
 				//update the menu. 
 				sortData();
@@ -617,6 +685,9 @@ public class MainActivity extends SherlockFragmentActivity
 				// if we are showing an article (showmenu= false)
 				// Enable the menu and set the display on rotate to false. 
 				showmenu=true;
+				// show menu icon
+				getSupportActionBar().setIcon(R.drawable.menu_icon);
+				//enable sliding menu
 				menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 				displayingArticle = false;
 				super.onBackPressed();
@@ -638,6 +709,9 @@ public class MainActivity extends SherlockFragmentActivity
 		// if in article mode, enable menus again and go back. 
 		else if(showmenu== false){
 				showmenu=true;
+				// show menu icon
+				getSupportActionBar().setIcon(R.drawable.menu_icon);
+				//enable sliding menu
 				menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 				// Don't show the article if rotated. 
 				displayingArticle = false;
@@ -649,7 +723,7 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 	}
 	
-	//This is whathappens when the app is paused. (rotating, pausing, etc)
+	//This is what happens when the app is paused. (rotating, pausing, etc)
 	public void onPause() {
 	    super.onPause(); 
 	    saveFinalAttended();
@@ -709,16 +783,16 @@ public class MainActivity extends SherlockFragmentActivity
 	/*
 	* To Do in the future:
 	*
+	*	Version control - How to handle the string of convocation data when updating the app!
+	*
 	*	Tweak the layout (size of text ,location, spacing of menus and text). 
 	*	It looks ok,but could probably be optimized to look better with longer convos and such on different devices.  
-	*	
-	*	We would like to add a Berea College theme. 
-	*	Add a change themes button. 
-	*	
+	*
 	*	add a database (parse?),xml, or some way to store data locally instead of in a list. 
 	*	This would allow updating the info instead of the entire app. 
 	*	Currently with the seperate DataStored class as long as it spits out a list, you could implement a database easily. 
-	*	Though it would change how the attended convos are stored. 
+	*	Though it would change how the attended convos are stored.
+	* 
 	*/
 	
 }

@@ -17,16 +17,18 @@
     
       <TextView
         android:id="@+id/ConvoTitle"
+        android:textIsSelectable="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/convo_title" 
+       	 
         android:textSize="20sp"/>   
       
       <TextView
         android:id="@+id/ConvoSpeaker"
+        android:textIsSelectable="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/convo_title" 
+         
         android:textSize="20sp"/>   
       
       <LinearLayout 
@@ -37,27 +39,31 @@
       android:paddingBottom="10dp"
           >
 		      <TextView
+		        android:textIsSelectable="false"
 		        android:id="@+id/ConvoTime"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="@string/convo_time" 
+		 
 		        android:gravity="left" />
 		      
 		      <TextView
+		          android:textIsSelectable="false"
 		          android:id="@+id/ConvoDate"
 		          android:layout_width="match_parent"
 		          android:layout_height="wrap_content"
 		          android:gravity="right"
-		          android:text="@string/convo_date" />
+				 />
 		      
 		</LinearLayout>		
 	<TextView
+	    android:textIsSelectable="false"
         android:id="@+id/ConvoDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/convo_description" />
+       />
 	
 	<ImageView 
+	    android:contentDescription="Berea College Logo"
 	    android:id="@+id/BereLogo"
 		android:visibility="invisible"
 	    android:layout_width="wrap_content"
