@@ -17,6 +17,7 @@ public class About extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		
 		if(settings.getInt("Theme",0) != 0){
 			setTheme(R.style.Theme_BereaBlue);
 		}

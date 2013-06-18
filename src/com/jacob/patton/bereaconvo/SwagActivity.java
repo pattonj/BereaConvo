@@ -19,9 +19,11 @@ public class SwagActivity extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		
 		if(settings.getInt("Theme",0) != 0){
 			setTheme(R.style.Theme_BereaBlue);
 		}
+		
 		setContentView(R.layout.swag_activity);
 		// Finds the button and sets the action. 
 		btn = (Button)findViewById(R.id.SignUp);
