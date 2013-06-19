@@ -28,6 +28,8 @@ public class About extends SherlockActivity {
 		res.setText(Html.fromHtml(getString(R.string.resources_info)));
 		TextView help = (TextView)findViewById(R.id.AboutHelpInfo);
 		help.setText(Html.fromHtml(getString(R.string.help_info)));
+		TextView license = (TextView)findViewById(R.id.ApacheLicense);
+		license.setText(Html.fromHtml(getString(R.string.apache_license)));
 		
 	}
 

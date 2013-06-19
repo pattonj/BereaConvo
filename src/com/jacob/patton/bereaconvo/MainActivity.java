@@ -93,9 +93,6 @@ public class MainActivity extends SherlockFragmentActivity
 		
 		menu.add("About")
 			.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-	
-        menu.add("Free Prizes")
-    		.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         
         return true;
     }
@@ -646,11 +643,7 @@ public class MainActivity extends SherlockFragmentActivity
 			Intent intent = new Intent(this, About.class);
 			startActivity(intent);
 		}
-		else if(item.getTitle().equals("Free Prizes")){
-			// starts the swagbucks/advertising intent. 
-			Intent intent = new Intent(this, SwagActivity.class);
-			startActivity(intent);
-		}
+		
 		
 		else if(item.getTitle().equals("Theme")){
 			
