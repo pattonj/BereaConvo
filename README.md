@@ -17,7 +17,6 @@ Attendance
 
 
 **Known Issuese**
-- The Berea Blue background does not set on About or Swag Activity. This is because WindowBackground does not work via the style for 2.2/2.3
 - Occasionally the image for the side menu does not tile as the XML layout specifies, but rather streches. This is a bug with Android and not the code. 
 
 **Resources**

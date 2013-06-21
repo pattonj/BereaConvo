@@ -15,12 +15,14 @@ public class About extends SherlockActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		if(settings.getInt("Theme",0) != 0){
 			setTheme(R.style.Theme_BereaBlue);
 		}
+		
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about);
 		
 		// I did this so that it could use bold print with HTML.  

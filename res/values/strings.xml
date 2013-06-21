@@ -22,7 +22,7 @@
     <string name="about_info">"This app was developed by Jacob Patton, and was originally started by Jacob Patton and Abraham Kali as part of the Advanced Android App class at Berea College. It is an open source app licensed under the Apache License Version 2.0. If you would enjoy creating such projects, consider taking a computer science class or even majoring or minoring in computer science"</string>
     
 
-    <string name="project_link">https://github.com/pattonj/BereaConvo/</string>
+    <string name="project_link">Project Link: https://github.com/pattonj/BereaConvo/</string>
     
     <string name="help_title">Instructions</string>
     <string name="help_info">        &lt;b>Viewing Convos&lt;/b>&lt;br>
