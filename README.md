@@ -3,6 +3,8 @@
 
 An application for viewing information about Berea College convocations. 
 
+https://play.google.com/store/apps/details?id=com.jacob.patton.bereaconvo
+
 **Instructions**
  
  Viewing Convos
