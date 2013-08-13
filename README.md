@@ -17,6 +17,9 @@ https://play.google.com/store/apps/details?id=com.jacob.patton.bereaconvo
 Attendance
 	To mark a convocation as attended, long press on the list title until a green arrow appears. This does NOT mark it as attended in the Berea College database. It is simply a way to help you keep track of how many you have attended. You still are required to turn in your convocation card.
 
+**Code Comments**
+- There are plenty of comments in the code which shoudl explain what things are for. It is importnat to realize that currenlty there is no way to update the app mid-year and keep the list of attended convos. (This is something that needs fixed in the future). When updating the list of convos you must update the "app_version" from the String.xml file. This alerts the app of a change in convo information and clears the storedattendance string. If you do not do this, the program will attempt to merge the data and the string into the array list and want to access a position in the string that doesn't exist! 
+ 
 
 **Known Issuese**
 - Occasionally the image for the side menu does not tile as the XML layout specifies, but rather streches. This is a bug with Android and not the code. 
