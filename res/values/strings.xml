@@ -3,12 +3,14 @@
 
     <string name="app_name">Berea Convo</string>
     <string name="title_activity_main">Berea Convo</string>
+    <string name="app_version">2013.2</string>
+    <string name="intro_title">Convo Update</string>
+    <string name="intro_text">The app has been updated with convo information for 2013&#8211;2014 academic year.</string>
+    <string name="EULA">While we strive to provide correct information about convocations, the data may be flawed or out of date due to changes by Berea College. If you are a student, by using this app you acknowledge that as you are solely responsible for keeping track of your convocations and convo cards MUST still be turned in.</string>
+	<string name="Rate_title">Please rate Berea Convo</string>
+	<string name="Rate">If you have found this app useful, please rate it and leave a comment in the Play Store. Thank you!</string>
     
-    <string name="app_version">2013.1</string>
-    <string name="intro_title">Thanks!</string>
-    <string name="intro_text">Thank you for downloading my first app! Instructions can be found under "About" from the menu.</string>
-    <string name="EULA">While we strive to provide correct information about convocations, the data may be flawed or out of date due to changes by Berea College. If you are a student, by using this app you acknowledge that as you are solley responsible for keeping track of your convocations and convo cards MUST still be turned in.</string>
-      
+    
     <string name="all_button">All</string>
     <string name="afternoon_button">Afternoon</string>
     <string name="evening_button">Evening</string>
